@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <img [src]="contact?.imageUrl" class="img-circle" width="80">
+    <h3>{{ contact?.name }}</h3>
+    <a class="btn btn-primary">Edit</a>
+    <a class="btn btn-danger">Delete</a>
+  </div>
+  <div class="panel-body">
+    <p>Email: {{ contact?.email }}</p>
+    <p>Phone: {{ contact?.phone }}</p>
+  </div>
+</div>
