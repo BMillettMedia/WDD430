@@ -3,8 +3,8 @@ import { Contact } from '../contact.model';
 
 @Component({
   selector: 'cms-contact-list',
-  templateUrl: './contact-list.component.html',
-  styleUrls: ['./contact-list.component.css']
+  templateUrl: './contact-list.html',
+  styleUrls: ['./contact-list.css']
 })
 export class ContactListComponent {
   contacts: Contact[] = [
