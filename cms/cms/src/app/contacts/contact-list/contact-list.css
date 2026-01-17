@@ -1,0 +1,24 @@
+.list-group {
+  border-radius: 4px;
+  background: white;
+  padding: 10px;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  border-bottom: 1px solid #eee;
+  padding: 12px 5px;
+  font-size: 16px;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+.list-group-item:hover {
+  background-color: #fafafa;
+  cursor: pointer;
+}

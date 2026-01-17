@@ -1,0 +1,21 @@
+.img-circle {
+  /*border-radius: 0%;
+  object-fit: cover;*/
+}
+
+.contact-detail-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+.contact-detail-info h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.contact-detail-info p {
+  margin: 0;
+  color: #555;
+}

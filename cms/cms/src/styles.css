@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  border-radius: 0;
+  margin-bottom: 20px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+/* Bootstrap button overrides */
+.btn-success {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #449d44;
+  border-color: #398439;
+}

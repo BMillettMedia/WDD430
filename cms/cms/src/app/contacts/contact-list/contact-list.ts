@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { Contact } from '../contact.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'cms-contact-list',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './contact-list.html',
   styleUrls: ['./contact-list.css']
 })

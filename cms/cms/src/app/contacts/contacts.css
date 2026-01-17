@@ -1,0 +1,15 @@
+.contacts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.contacts-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.new-contact-btn {
+  height: 32px;
+}

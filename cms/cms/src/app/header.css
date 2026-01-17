@@ -1,0 +1,14 @@
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar-nav > li > a {
+  color: #555;
+  padding: 15px 20px;
+}
+
+.navbar-nav > li > a:hover {
+  background-color: #f3f3f3;
+  color: #000;
+}
