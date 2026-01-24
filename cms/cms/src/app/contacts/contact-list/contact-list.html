@@ -7,7 +7,9 @@
 
   <div class="panel-body">
     <ul class="list-group">
-      <li *ngFor="let contact of contacts" class="list-group-item">
+      <li *ngFor="let contact of contacts"
+          (click)="onSelected(contact)"
+          class="list-group-item">
         <img [src]="contact.imageUrl" alt="" class="img-circle" width="50">
         {{ contact.name }}
       </li>

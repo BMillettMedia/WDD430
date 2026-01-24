@@ -1,0 +1,15 @@
+.panel {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+}
+
+.document-list {
+  padding: 5px 0;
+}
+
+.document-detail {
+  text-align: right;
+  color: #444;
+  font-weight: 500;
+}

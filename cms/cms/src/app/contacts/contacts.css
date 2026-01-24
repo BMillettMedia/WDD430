@@ -13,3 +13,21 @@
 .new-contact-btn {
   height: 32px;
 }
+
+.panel {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+}
+
+.list-group-item img {
+  border-radius: 50%;
+  width: 50px;
+}

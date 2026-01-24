@@ -1,0 +1,29 @@
+.panel {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+}
+
+.btn {
+  margin-right: 5px;
+  padding: 6px 14px;
+}
+
+.btn-success {
+  background: #5cb85c;
+  border: none;
+}
+
+.btn-danger {
+  background: #d9534f;
+  border: none;
+}

@@ -22,3 +22,7 @@
   background-color: #fafafa;
   cursor: pointer;
 }
+
+.list-group {
+  margin-top: 10px;
+}

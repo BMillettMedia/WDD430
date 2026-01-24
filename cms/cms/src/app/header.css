@@ -12,3 +12,11 @@
   background-color: #f3f3f3;
   color: #000;
 }
+
+.navbar-brand {
+  font-weight: 600;
+}
+
+.nav > li > a {
+  padding: 10px 15px;
+}

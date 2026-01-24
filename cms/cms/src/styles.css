@@ -25,3 +25,24 @@ body {
   background-color: #449d44;
   border-color: #398439;
 }
+
+
+.panel {
+  margin-top: 15px;
+  border-radius: 4px;
+}
+
+.panel-heading h3 {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn.pull-right {
+  margin-left: auto;
+}
+
+.navbar {
+  border-radius: 0;
+}

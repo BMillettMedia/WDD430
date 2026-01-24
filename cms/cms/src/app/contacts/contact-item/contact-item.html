@@ -1,0 +1,9 @@
+<!--old code
+<a class="list-group-item clearfix" (click)="onSelected()">
+    <img [src]="contact.imageUrl" alt="" class="img-circle" width="50">
+            {{ contact.name }}
+</a>-->
+<li (click)="onSelected()" class="list-group-item">
+  <img [src]="contact.imageUrl" class="img-circle" width="50">
+  {{ contact.name }}
+</li>        

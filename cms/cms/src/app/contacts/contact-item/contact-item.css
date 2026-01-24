@@ -1,0 +1,9 @@
+.contact-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contact-item img {
+  border-radius: 50%;
+}
