@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { DocumentListComponent } from './document-list/document-list.component';
+import { DocumentList } from './document-list/document-list';
 
 
 @Component({
   selector: 'cms-documents',
-  imports: [DocumentListComponent],
+  imports: [DocumentList],
   templateUrl: './documents.html',
   styleUrl: './documents.css',
   template: `
@@ -14,6 +14,6 @@ import { DocumentListComponent } from './document-list/document-list.component';
     </div>
   `
 })
-export class Documents {
+export class DocumentsComponent{
 
 }

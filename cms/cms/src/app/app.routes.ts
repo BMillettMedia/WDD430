@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 
 import { ContactsComponent } from './contacts/contacts.component';
-import { MessagesComponent } from './messages/messages.component';
-import { DocumentsComponent } from './documents/documents.component';
+import { MessagesComponent } from './messages/messages';
+import { DocumentsComponent } from './documents/documents';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/documents', pathMatch: 'full' },

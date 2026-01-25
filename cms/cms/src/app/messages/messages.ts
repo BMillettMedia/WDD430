@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { MessageListComponent } from './message-list/message-list.component';
-import { MessageEditComponent } from './message-edit/message-edit.component';
+import { MessageList } from './message-list/message-list';
+import { MessageEdit } from './message-edit/message-edit';
 
 @Component({
   selector: 'cms-messages',
-  imports: [MessageListComponent, MessageEditComponent],
+  imports: [MessageList, MessageEdit],
   templateUrl: './messages.html',
   styleUrl: './messages.css',
   template: `
@@ -15,6 +15,6 @@ import { MessageEditComponent } from './message-edit/message-edit.component';
     </div>
   `
 })
-export class Messages {
+export class MessagesComponent {
 
 }
