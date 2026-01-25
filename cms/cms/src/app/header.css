@@ -1,6 +1,7 @@
 .navbar {
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
 }
 
 .navbar-nav > li > a {
@@ -15,8 +16,11 @@
 
 .navbar-brand {
   font-weight: 600;
+  font-weight: bold;
 }
 
 .nav > li > a {
   padding: 10px 15px;
+  border-color: #e7e7e7 !important;
+  border-radius: 4px;
 }

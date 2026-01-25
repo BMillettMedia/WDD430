@@ -1,19 +1,12 @@
 import { Component } from '@angular/core';
-/*import { RouterLink, RouterLinkActive } from '@angular/router';*/
-import { Contacts } from './contacts/contacts';
+import { RouterModule } from '@angular/router';
 import { ContactsComponent } from './contacts/contacts.component';
-
 
 @Component({
   selector: 'cms-header',
   standalone: true,
-  imports: [ContactsComponent, Contacts],
+  imports: [ContactsComponent, RouterModule],
   templateUrl: './header.html',
-  styleUrl: './header.css',
+  styleUrls: ['./header.css']
 })
-/*export class Header {
-
-}*/
-
-
 export class HeaderComponent {}

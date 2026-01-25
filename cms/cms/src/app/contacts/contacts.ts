@@ -11,13 +11,12 @@ import { ContactDetailComponent } from './contact-detail/contact-detail';
   styleUrl: './contacts.css',
   imports: [CommonModule, ContactListComponent, ContactDetailComponent]
 })
-export class ContactComponent {
+  export class ContactsComponent {
+    selectedContact!: Contact;
 
-  selectedContact!: Contact;
-
-  onContactSelected(contact: Contact) {
-  this.selectedContact = contact;
-}
+    onContactSelected(contact: Contact) {
+      this.selectedContact = contact;
+    }
 }
 
 
