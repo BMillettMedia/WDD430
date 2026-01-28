@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MessageList } from './message-list/message-list';
 import { MessageEdit } from './message-edit/message-edit';
 
 @Component({
   selector: 'cms-messages',
-  imports: [MessageList, MessageEdit],
+  imports: [MessageList, MessageEdit, CommonModule],
   templateUrl: './messages.html',
   styleUrl: './messages.css',
   template: `
