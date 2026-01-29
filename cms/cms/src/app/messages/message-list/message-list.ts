@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MessageItem } from '../message-item/message-item';
-import { Message } from '../message.mode';
+import { Message } from '../message.model';
 
 @Component({
   selector: 'cms-message-list',
@@ -12,7 +12,7 @@ import { Message } from '../message.mode';
 })
 export class MessageList {
 //sample messages copied from assignment image example 
-  messages: Message = [
+  messages: Message[] = [
     { sender: 'Bro. Jackson', text: 'The grades for this assignment have been posted' },
     { sender: 'Steve Johnson', text: 'When is assignment 3 due' },
     { sender: 'Bro. Jackson', text: 'Assignment 3 is due on Saturday at 11:30 PM' },
