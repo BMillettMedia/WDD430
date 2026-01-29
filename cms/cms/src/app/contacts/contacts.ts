@@ -6,7 +6,7 @@ import { ContactDetailComponent } from './contact-detail/contact-detail';
 
 @Component({
   selector: 'cms-contacts',
-  standalone: true,
+  //standalone: true,
   templateUrl: './contacts.html',
   styleUrl: './contacts.css',
   imports: [CommonModule, ContactListComponent, ContactDetailComponent]

@@ -5,6 +5,7 @@ import { MessageEdit } from './message-edit/message-edit';
 
 @Component({
   selector: 'cms-messages',
+  //selector: 'app-messages',
   imports: [MessageList, MessageEdit, CommonModule],
   templateUrl: './messages.html',
   styleUrl: './messages.css',

@@ -5,7 +5,7 @@ import { ContactDetailComponent } from './contact-detail/contact-detail';
 
 @Component({
   selector: 'cms-contacts',
-  standalone: true,
+  //standalone: true,
   imports: [ContactListComponent, ContactDetailComponent],
   template: `
     <div class="row">

@@ -5,7 +5,7 @@ import { DocumentList } from './document-list/document-list';
 
 @Component({
   selector: 'cms-documents',
-  standalone:true,
+  //standalone:true,
   imports: [DocumentList, CommonModule],
   templateUrl: './documents.html',
   styleUrl: './documents.css',

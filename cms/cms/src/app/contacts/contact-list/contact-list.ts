@@ -5,7 +5,7 @@ import { ContactItemComponent } from '../contact-item/contact-item';
 
 @Component({
   selector: 'cms-contact-list',
-  standalone: true,
+  //standalone: true,
   imports: [CommonModule, ContactItemComponent],
   templateUrl: './contact-list.html',
   styleUrls: ['./contact-list.css']

@@ -5,7 +5,7 @@ import { Message } from '../message.model';
 
 @Component({
   selector: 'cms-message-list',
-  standalone:true,
+  //standalone:true,
   imports: [CommonModule, MessageItem],
   templateUrl: './message-list.html',
   styleUrl: './message-list.css',
