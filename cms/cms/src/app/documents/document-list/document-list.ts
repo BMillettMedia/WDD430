@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'cms-document-list',
-  //standalone:true,
-  imports: [],
+  selector: 'app-document-list',
   templateUrl: './document-list.html',
-  styleUrl: './document-list.css',
+  styleUrls: ['./document-list.css']
 })
-export class DocumentListComponent {
-
-}
+export class DocumentListComponent {}

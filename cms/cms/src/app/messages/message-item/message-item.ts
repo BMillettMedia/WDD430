@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Message } from '../message.model';
 
 @Component({
-  selector: 'app-message-item',
-  templateUrl: './message-item.html',
-  styleUrls: ['./message-item.css']
+  selector: 'cms-message-item',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './message-item.html'
 })
 export class MessageItem {
   @Input() message!: Message;

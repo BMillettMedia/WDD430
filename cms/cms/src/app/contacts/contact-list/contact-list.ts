@@ -1,25 +1,22 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Contact } from '../contact.model';
+
 import { ContactItemComponent } from '../contact-item/contact-item';
+import { Contact } from '../contact.model';
 
 @Component({
   selector: 'cms-contact-list',
-  //standalone: true,
-  imports: [CommonModule, ContactItemComponent],
-  templateUrl: './contact-list.html',
-  styleUrls: ['./contact-list.css']
+  standalone: true,
+  imports: [
+    CommonModule,
+    ContactItemComponent
+  ],
+  templateUrl: './contact-list.html'
 })
 export class ContactListComponent {
-
-  @Output() selectedContactEvent = new EventEmitter<Contact>();
-
-  contacts: Contact[] = [
-    new Contact("1","R. Kent Jackson","jacksonk@byui.edu","208-496-3771","assets/images/jacksonk.jpg", null),
-    new Contact("2","Rex Barzee","barzeer@byui.edu","208-496-3768","assets/images/barzeer.jpg", null)
-  ];
+  contacts: Contact[] = [];
 
   onSelected(contact: Contact) {
-    this.selectedContactEvent.emit(contact);
+    console.log('Selected contact:', contact);
   }
 }

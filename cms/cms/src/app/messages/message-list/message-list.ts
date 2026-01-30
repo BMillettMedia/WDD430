@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { MessageItem } from '../message-item/message-item';
 import { Message } from '../message.model';
 
 @Component({
-  selector: 'app-message-list',
-  templateUrl: './message-list.html',
-  styleUrls: ['./message-list.css']
+  selector: 'cms-message-list',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MessageItem
+  ],
+  templateUrl: './message-list.html'
 })
 export class MessageList {
   messages: Message[] = [];

@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'cms-message-edit',
-  //standalone:true,
-  imports: [],
-  templateUrl: './message-edit.html',
-  styleUrl: './message-edit.css',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './message-edit.html'
 })
-export class MessageEdit {
-
-}
+export class MessageEdit {}
