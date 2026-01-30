@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
-import { DocumentList } from './document-list/document-list';
+import { DocumentListComponent } from './document-list/document-list';
 
 
 @Component({
   selector: 'cms-documents',
   //standalone:true,
-  imports: [DocumentList, CommonModule],
+  imports: [DocumentListComponent, CommonModule],
   templateUrl: './documents.html',
   styleUrl: './documents.css',
   template: `
