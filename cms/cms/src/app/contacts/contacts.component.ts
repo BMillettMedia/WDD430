@@ -1,22 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ContactItemComponent } from './contact-item/contact-item';
-import { Contact } from './contact.model';
+import { ContactListComponent } from './contact-list/contact-list';
 
 @Component({
-  selector: 'cms-contact-list',
+  selector: 'cms-contacts',
   standalone: true,
   imports: [
     CommonModule,
-    ContactItemComponent
+    ContactListComponent
   ],
-  templateUrl: './contact-list.html'
+  templateUrl: './contacts.html'
 })
-export class ContactListComponent {
-  contacts: Contact[] = [];
-
-  onSelected(contact: Contact) {
-    console.log('Selected contact:', contact);
-  }
-}
+export class ContactsComponent {}
