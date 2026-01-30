@@ -1,1 +1,7 @@
-<cms-document-list></cms-document-list>
+<ul class="list-group">
+  <cms-document-item
+    *ngFor="let document of documents"
+    [document]="document"
+    (click)="onSelectedDocument(document)">
+  </cms-document-item>
+</ul>

@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { DocumentListComponent } from './document-list/document-list';
+import { Document } from './document.model';
+import { DocumentListComponent } from './document-list/document-list.component';
+import { DocumentDetailComponent } from './document-detail/document-detail.component';
 
 @Component({
   selector: 'cms-documents',
   standalone: true,
   imports: [
     CommonModule,
-    DocumentListComponent
+    DocumentListComponent,
+    DocumentDetailComponent
   ],
-  templateUrl: './documents.html'
+  templateUrl: './documents.component.html'
 })
-export class DocumentsComponent {}
+export class DocumentsComponent {
+  selectedDocument?: Document;
+}
