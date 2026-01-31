@@ -1,0 +1,8 @@
+/* src/app/documents/document-item/document-item.component.css */
+.list-group-item {
+  cursor: pointer;
+  padding: 10px;
+}
+.list-group-item:hover {
+  background-color: #f0f0f0;
+}

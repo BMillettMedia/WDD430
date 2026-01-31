@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Document } from '../document.model';
-import { DocumentItemComponent } from '../document-item/document-item.component';
+import { Document } from '../documents.model';
+import { DocumentItemComponent } from '../document-item/document-item';
 
 @Component({
   selector: 'cms-document-list',
@@ -19,6 +19,7 @@ export class DocumentListComponent {
     new Document('3', 'RxJS Docs', 'Reactive programming', 'https://rxjs.dev'),
     new Document('4', 'MDN Web Docs', 'Web standards', 'https://developer.mozilla.org')
   ];
+  //get more info when this actually works
 
   onSelectedDocument(document: Document) {
     this.selectedDocumentEvent.emit(document);

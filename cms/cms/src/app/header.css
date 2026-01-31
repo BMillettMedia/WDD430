@@ -24,3 +24,12 @@
   border-color: #e7e7e7 !important;
   border-radius: 4px;
 }
+
+
+/* drop down test */
+.dropdown-menu {
+  display: none;
+}
+.open .dropdown-menu {
+  display: block;
+}

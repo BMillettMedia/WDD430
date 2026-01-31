@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Document } from './document.model';
-import { DocumentListComponent } from './document-list/document-list.component';
-import { DocumentDetailComponent } from './document-detail/document-detail.component';
+import { Document } from './documents.model';
+import { DocumentListComponent } from './document-list/document-list';
+import { DocumentDetail } from './document-detail/document-detail';
 
 @Component({
   selector: 'cms-documents',
@@ -10,7 +10,7 @@ import { DocumentDetailComponent } from './document-detail/document-detail.compo
   imports: [
     CommonModule,
     DocumentListComponent,
-    DocumentDetailComponent
+    DocumentDetail
   ],
   templateUrl: './documents.component.html'
 })

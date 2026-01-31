@@ -1,0 +1,9 @@
+/* src/app/documents/document-detail/document-detail.component.css */
+.card {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+.card-header {
+  font-weight: bold;
+}

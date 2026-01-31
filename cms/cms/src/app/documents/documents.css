@@ -13,3 +13,7 @@
   color: #444;
   font-weight: 500;
 }
+.row {
+  display: flex;
+  gap: 20px;
+}

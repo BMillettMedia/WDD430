@@ -1,3 +1,7 @@
 .document-item {
   padding: 5px;
 }
+.list-group {
+  padding: 0;
+  margin: 0;
+}

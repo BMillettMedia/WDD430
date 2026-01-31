@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Document } from '../document.model';
+import { Document } from '../documents.model';
 
 @Component({
   selector: 'cms-document-detail',
@@ -9,6 +9,6 @@ import { Document } from '../document.model';
   templateUrl: './document-detail.component.html',
   styleUrls: ['./document-detail.component.css']
 })
-export class DocumentDetailComponent {
+export class DocumentDetail {
   @Input() document!: Document;
 }
