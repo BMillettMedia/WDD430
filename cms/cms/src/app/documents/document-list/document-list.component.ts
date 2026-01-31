@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Document } from '../documents.model';
-import { DocumentItemComponent } from '../document-item/document-item';
+import { DocumentItemComponent } from '../document-item/document-item.component';
 
 @Component({
   selector: 'cms-document-list',

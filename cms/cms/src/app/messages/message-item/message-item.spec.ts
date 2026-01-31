@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MessageItem } from './message-item';
+import { MessageItem } from './message-item.component';
 
 describe('MessageItem', () => {
   let component: MessageItem;

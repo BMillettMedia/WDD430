@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ContactItemComponent } from '../contact-item/contact-item';
+import { ContactItemComponent } from '../contact-item/contact-item.component';
 import { Contact } from '../contact.model';
 
 @Component({

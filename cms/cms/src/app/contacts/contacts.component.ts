@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ContactListComponent } from './contact-list/contact-list';
+import { ContactListComponent } from './contact-list/contact-list.component';
 
 @Component({
   selector: 'cms-contacts',

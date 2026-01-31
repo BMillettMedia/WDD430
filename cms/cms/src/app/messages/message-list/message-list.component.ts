@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MessageItem } from '../message-item/message-item';
+import { MessageItem } from '../message-item/message-item.component';
 import { Message } from '../message.model';
 
 @Component({

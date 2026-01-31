@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MessageEdit } from './message-edit';
+import { MessageEdit } from './message-edit.component';
 
 describe('MessageEdit', () => {
   let component: MessageEdit;
