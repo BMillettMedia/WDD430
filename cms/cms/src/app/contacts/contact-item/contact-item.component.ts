@@ -6,7 +6,8 @@ import { Contact } from '../contact.model';
   selector: 'cms-contact-item',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './contact-item.html'
+  templateUrl: 'contact-item.component.html',
+  styleUrls: ['contact-item.component.css']
 })
 export class ContactItemComponent {
   @Input() contact!: Contact;

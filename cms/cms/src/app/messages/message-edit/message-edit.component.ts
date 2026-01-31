@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'cms-message-edit',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './message-edit.html'
+  templateUrl: './message-edit.component.html',
+  styleUrls: ['./message-edit.component.css']
 })
 export class MessageEdit {}

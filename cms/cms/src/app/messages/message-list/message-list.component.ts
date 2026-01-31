@@ -11,7 +11,8 @@ import { Message } from '../message.model';
     CommonModule,
     MessageItem
   ],
-  templateUrl: './message-list.html'
+  templateUrl: './message-list.component.html',
+  styleUrls: ['./message-list.component.css']
 })
 export class MessageList {
   messages: Message[] = [];

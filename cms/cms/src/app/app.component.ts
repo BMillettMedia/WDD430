@@ -10,6 +10,7 @@ import { HeaderComponent } from './header.component';
     RouterOutlet,
     HeaderComponent
   ],
-  templateUrl: './app.html'
+   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {}

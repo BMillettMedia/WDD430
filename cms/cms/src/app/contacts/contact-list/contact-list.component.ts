@@ -11,7 +11,8 @@ import { Contact } from '../contact.model';
     CommonModule,
     ContactItemComponent
   ],
-  templateUrl: './contact-list.html'
+  templateUrl: './contact-list.component.html',
+  styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent {
   contacts: Contact[] = [];

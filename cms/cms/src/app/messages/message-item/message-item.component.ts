@@ -6,7 +6,8 @@ import { Message } from '../message.model';
   selector: 'cms-message-item',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './message-item.html'
+  templateUrl: './message-item.component.html',
+  styleUrls: ['./message-item.component.css']
 })
 export class MessageItem {
   @Input() message!: Message;

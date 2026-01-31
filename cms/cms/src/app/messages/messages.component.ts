@@ -12,6 +12,7 @@ import { MessageEdit } from './message-edit/message-edit.component';
     MessageList,
     MessageEdit
   ],
-  templateUrl: './messages.html'
+  templateUrl: './messages.component.html',
+  styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent {}

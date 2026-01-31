@@ -10,6 +10,7 @@ import { ContactListComponent } from './contact-list/contact-list.component';
     CommonModule,
     ContactListComponent
   ],
-  templateUrl: './contacts.html'
+   templateUrl: './contacts.component.html',
+  styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent {}
