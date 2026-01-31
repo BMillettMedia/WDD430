@@ -1,20 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
 
-import { Documents } from './documents';
+import { DocumentsComponent } from './documents.component';
+import { DocumentListComponent } from './document-list/document-list.component';
+import { DocumentDetailComponent } from './document-detail/document-detail.component';
 
-describe('Documents', () => {
-  let component: Documents;
-  let fixture: ComponentFixture<Documents>;
+describe('DocumentsComponent', () => {
+  let component: DocumentsComponent;
+  let fixture: ComponentFixture<DocumentsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Documents]
-    })
-    .compileComponents();
+      declarations: [
+        DocumentsComponent,
+        DocumentListComponent,
+        DocumentDetailComponent
+      ],
+      imports: [CommonModule]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(Documents);
+    fixture = TestBed.createComponent(DocumentsComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

@@ -1,11 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Document } from '../documents.model';
 
 @Component({
   selector: 'cms-document-item',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './document-item.component.html',
   styleUrls: ['./document-item.component.css']
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Document } from './documents.model';
 import { DocumentListComponent } from './document-list/document-list.component';
-import { DocumentDetail } from './document-detail/document-detail.component';
+import { DocumentDetailComponent } from './document-detail/document-detail.component';
 
 @Component({
   selector: 'cms-documents',
@@ -10,7 +10,7 @@ import { DocumentDetail } from './document-detail/document-detail.component';
   imports: [
     CommonModule,
     DocumentListComponent,
-    DocumentDetail
+    DocumentDetailComponent
   ],
   templateUrl: './documents.component.html'
 })

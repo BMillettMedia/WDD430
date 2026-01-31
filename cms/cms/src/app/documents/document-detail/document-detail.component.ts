@@ -9,6 +9,6 @@ import { Document } from '../documents.model';
   templateUrl: './document-detail.component.html',
   styleUrls: ['./document-detail.component.css']
 })
-export class DocumentDetail {
+export class DocumentDetailComponent {
   @Input() document!: Document;
 }
