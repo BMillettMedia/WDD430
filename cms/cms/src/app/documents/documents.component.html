@@ -1,12 +1,19 @@
-<div class="row">
-  <div class="col-md-5">
+<div class="documents-container">
+  <!-- LEFT SIDE -->
+  <div class="documents-list">
+    <div class="documents-header">
+      <h2>Documents</h2>
+      <button class="btn btn-success">Add Document</button>
+    </div>
+
     <cms-document-list
       (selectedDocumentEvent)="selectedDocument = $event">
     </cms-document-list>
   </div>
-  <div class="col-md-7">
+
+  <!-- RIGHT SIDE -->
+  <div class="documents-detail" *ngIf="selectedDocument">
     <cms-document-detail
-      *ngIf="selectedDocument"
       [document]="selectedDocument">
     </cms-document-detail>
   </div>

@@ -17,3 +17,30 @@
   display: flex;
   gap: 20px;
 }
+
+.documents-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.documents-list {
+  flex: 2;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+}
+
+.documents-detail {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+}
+
+.documents-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}

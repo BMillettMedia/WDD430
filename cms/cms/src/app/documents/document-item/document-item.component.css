@@ -1,8 +1,19 @@
-/* src/app/documents/document-item/document-item.component.css */
 .list-group-item {
   cursor: pointer;
   padding: 10px;
 }
 .list-group-item:hover {
   background-color: #f0f0f0;
+}
+
+
+.document-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+  background: #f9f9f9;
+}
+
+.document-card:hover {
+  background: #eee;
 }
