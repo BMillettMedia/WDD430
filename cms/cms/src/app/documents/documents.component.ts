@@ -18,7 +18,7 @@ import { DocumentDetailComponent } from './document-detail/document-detail.compo
 })
 export class DocumentsComponent implements OnInit {
 
-  selectedDocument: Document | null = null;
+  selectedDocument!: Document;
 
   constructor(private documentService: DocumentService) {}
 

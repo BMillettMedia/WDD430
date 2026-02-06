@@ -6,9 +6,12 @@
       <button class="btn btn-success">Add Document</button>
     </div>
 
-    <cms-document-list
-      (selectedDocumentEvent)="selectedDocument = $event">
-    </cms-document-list>
+    <cms-document-list></cms-document-list>
+
+    <cms-document-detail
+      *ngIf="selectedDocument"
+      [document]="selectedDocument">
+    </cms-document-detail>
   </div>
 
   <!-- RIGHT SIDE -->
