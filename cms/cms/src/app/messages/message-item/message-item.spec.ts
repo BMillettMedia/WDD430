@@ -1,23 +1,27 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Message } from '../message.model';
+import { Contact } from '../../contacts/contact.model';
+import { ContactService } from '../../contacts/contact.service';
 
-import { MessageItem } from './message-item.component';
+@Component({
+  selector: 'cms-message-item',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './message-item.component.html',
+  styleUrls: ['./message-item.component.css']
+})
+export class MessageItemComponent implements OnInit {
 
-describe('MessageItem', () => {
-  let component: MessageItem;
-  let fixture: ComponentFixture<MessageItem>;
+  @Input() message!: Message;
+  messageSender = '';
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [MessageItem]
-    })
-    .compileComponents();
+  constructor(private contactService: ContactService) {}
 
-    fixture = TestBed.createComponent(MessageItem);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
+  ngOnInit() {
+    const contact: Contact | null =
+      this.contactService.getContact(this.message.sender);
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    this.messageSender = contact ? contact.name : 'Unknown';
+  }
+}

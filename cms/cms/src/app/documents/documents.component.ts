@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Document } from './documents.model';
+import { Document } from './document.serive';
+import { DocumentService } from './document.service';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
 
@@ -12,8 +13,20 @@ import { DocumentDetailComponent } from './document-detail/document-detail.compo
     DocumentListComponent,
     DocumentDetailComponent
   ],
-  templateUrl: './documents.component.html'
+  templateUrl: './documents.component.html',
+  styleUrls: ['./documents.component.css']
 })
-export class DocumentsComponent {
-  selectedDocument?: Document;
+export class DocumentsComponent implements OnInit {
+
+  selectedDocument: Document | null = null;
+
+  constructor(private documentService: DocumentService) {}
+
+  ngOnInit() {
+    this.documentService.documentSelectedEvent.subscribe(
+      (document: Document) => {
+        this.selectedDocument = document;
+      }
+    );
+  }
 }

@@ -1,16 +1,28 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { Component, OnInit } from '@angular/core';
+import { Contact } from './contact.model';
+import { ContactService } from './contact.service';
 import { ContactListComponent } from './contact-list/contact-list.component';
+import { ContactDetailComponent } from './contact-detail/contact-detail.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'cms-contacts',
   standalone: true,
-  imports: [
-    CommonModule,
-    ContactListComponent
-  ],
-   templateUrl: './contacts.component.html',
+  imports: [CommonModule, ContactListComponent, ContactDetailComponent],
+  templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css']
 })
-export class ContactsComponent {}
+export class ContactsComponent implements OnInit {
+
+  selectedContact: Contact | null = null;
+
+  constructor(private contactService: ContactService) {}
+
+  ngOnInit() {
+    this.contactService.contactSelectedEvent.subscribe(
+      (contact: Contact) => {
+        this.selectedContact = contact;
+      }
+    );
+  }
+}

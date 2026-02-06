@@ -2,8 +2,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 }
 
 .contact-item img {
   border-radius: 50%;
+}
+
+.contact-item:hover{
+  background-color: #f5f5f5;
+}
+
+.contact-name{
+  line-height: 40px;
+  font-weight: 500;
 }
