@@ -44,3 +44,17 @@
   align-items: center;
   margin-bottom: 15px;
 }
+
+
+.documents-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .documents-layout {
+    grid-template-columns: 1fr;
+  }
+}

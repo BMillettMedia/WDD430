@@ -3,9 +3,15 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  /*width: 48px;*/
+  /*height: 48px;*/
+  /*border-radius: 50%;*/
 }
 
 .contact-item img {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
 }
 
@@ -16,4 +22,13 @@
 .contact-name{
   line-height: 40px;
   font-weight: 500;
+}
+
+/*mobile*/
+@media (max-width: 600px) {
+  .contact-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
 }
