@@ -6,6 +6,7 @@ import { MessageService } from './message.service';
 
 import { MessageListComponent } from './message-list/message-list.component';
 import { MessageEditComponent } from './message-edit/message-edit.component';
+import { MessageDetailComponent } from './message-detail/message-detail.component';
 
 @Component({
   selector: 'cms-messages',
@@ -13,7 +14,8 @@ import { MessageEditComponent } from './message-edit/message-edit.component';
   imports: [
     CommonModule,
     MessageListComponent,
-    MessageEditComponent
+    MessageEditComponent,
+    MessageDetailComponent
   ],
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input ,Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Message } from '../message.model';
 import { MessageService } from '../message.service';
@@ -13,9 +13,9 @@ import { MessageItemComponent } from '../message-item/message-item.component';
 })
 export class MessageListComponent implements OnInit {
 
-  messages: Message[] = [];
+  //messages: Message[] = [];
 
-
+  @Input() messages: Message[] = [];
   @Output() selectedMessage = new EventEmitter<Message>();
 
   constructor(private messageService: MessageService) {}
