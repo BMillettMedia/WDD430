@@ -1,26 +1,23 @@
 <div class="documents-container">
+ <div class="row">
+
   <!-- LEFT SIDE -->
-  <div class="documents-list">
-    <div class="documents-header">
+  <div class="col-md-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
       <h2>Documents</h2>
       <button class="btn btn-success">Add Document</button>
     </div>
 
     <cms-document-list></cms-document-list>
-
-    <cms-document-detail
-      *ngIf="selectedDocument"
-      [document]="selectedDocument">
-    </cms-document-detail>
   </div>
 
   <!-- RIGHT SIDE -->
-  <div class="documents-detail" *ngIf="selectedDocument">
-    <cms-document-detail
-      [document]="selectedDocument">
-    </cms-document-detail>
+  <div class="col-md-7">
+    <cms-document-detail></cms-document-detail>
   </div>
+
 </div>
+
 
 
 <!-- mobile to work in later

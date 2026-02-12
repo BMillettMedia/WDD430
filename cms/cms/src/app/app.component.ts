@@ -1,16 +1,31 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+//import { RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from './header.component';
+import { ContactsComponent } from './contacts/contacts.component';
+import { DocumentsComponent } from './documents/documents.component';
+import { MessagesComponent } from './messages/messages.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
-    HeaderComponent
+    CommonModule,
+    HeaderComponent,
+    ContactsComponent,
+    DocumentsComponent,
+    MessagesComponent
   ],
    templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {}
+export class AppComponent {
+
+  selectedFeature: string = 'contacts';
+
+  onFeatureSelected(feature: string): void {
+    this.selectedFeature = feature;
+  }
+
+}

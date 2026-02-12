@@ -7,11 +7,11 @@
 
   <div class="panel-body">
     <ul class="list-group contact-list">
-  <cms-contact-item
-    *ngFor="let contact of contacts"
-    [contact]="contact"
-    (click)="onSelected(contact)">
-  </cms-contact-item>
-</ul>
+      <cms-contact-item
+        *ngFor="let contact of contacts"
+        [contact]="contact"
+        (click)="onSelected(contact)">
+      </cms-contact-item>
+    </ul>
   </div>
 </div>

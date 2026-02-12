@@ -1,2 +1,16 @@
-<cms-message-list></cms-message-list>
-<cms-message-edit></cms-message-edit>
+<div class="row">
+
+  <div class="col-md-5">
+    <cms-message-list
+      [messages]="messages"
+      (selectedMessage)="onMessageSelected($event)">
+    </cms-message-list>
+  </div>
+
+  <div class="col-md-7">
+    <cms-message-detail
+      [message]="selectedMessage">
+    </cms-message-detail>
+  </div>
+
+</div>

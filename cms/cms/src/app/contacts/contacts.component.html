@@ -9,7 +9,9 @@
   <div class="panel-body">
     <div class="row">
       <div class="col-sm-5">
-        <cms-contact-list></cms-contact-list>
+        <cms-contact-list 
+        [contacts]="contacts"
+        (selectedContact)="onContactSelected($event)"></cms-contact-list>
       </div>
 
       <div class="col-sm-7">

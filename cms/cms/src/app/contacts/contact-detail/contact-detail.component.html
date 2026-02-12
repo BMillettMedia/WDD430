@@ -12,4 +12,8 @@
     <p><strong>Email:</strong> {{ contact.email }}</p>
     <p><strong>Phone:</strong> {{ contact.phone }}</p>
   </div>
+
+  <div *ngIf="!contact">
+  <p>Please select a contact.</p>
+</div>
 </div>

@@ -1,6 +1,7 @@
 <ul class="list-group">
   <cms-message-item
     *ngFor="let message of messages"
-    [message]="message">
+    [message]="message"
+    (messageSelected)="onSelected($event)">
   </cms-message-item>
 </ul>

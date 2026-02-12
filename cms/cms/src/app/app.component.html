@@ -1,6 +1,13 @@
-<cms-header></cms-header>
+<cms-header
+  (featureSelected)="onFeatureSelected($event)">
+</cms-header>
 
-<main class="container mt-3">
-  <router-outlet></router-outlet>
-</main>
+<div class="container mt-4">
 
+  <cms-contacts *ngIf="selectedFeature === 'contacts'"></cms-contacts>
+
+  <cms-documents *ngIf="selectedFeature === 'documents'"></cms-documents>
+
+  <cms-messages *ngIf="selectedFeature === 'messages'"></cms-messages>
+
+</div>

@@ -14,15 +14,17 @@ import { CommonModule } from '@angular/common';
 })
 export class ContactsComponent implements OnInit {
 
+  contacts: Contact[] = [];
   selectedContact: Contact | null = null;
 
   constructor(private contactService: ContactService) {}
 
-  ngOnInit() {
-    this.contactService.contactSelectedEvent.subscribe(
-      (contact: Contact) => {
-        this.selectedContact = contact;
-      }
-    );
+  ngOnInit(): void {
+    this.contacts = this.contactService.getContacts();
   }
+
+  onContactSelected(contact: Contact): void {
+    this.selectedContact = contact;
+  }
+
 }

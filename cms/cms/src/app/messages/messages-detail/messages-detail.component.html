@@ -1,0 +1,9 @@
+<div *ngIf="message; else noMessage">
+  <h3>{{ message.subject }}</h3>
+  <p><strong>From:</strong> {{ message.sender }}</p>
+  <p>{{ message.body }}</p>
+</div>
+
+<ng-template #noMessage>
+  <p>Please select a message.</p>
+</ng-template>
