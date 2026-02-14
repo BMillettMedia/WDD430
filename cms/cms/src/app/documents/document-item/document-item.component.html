@@ -1,15 +1,19 @@
-<a
-  class="list-group-item clearfix"
-  [routerLink]="[document.id]"
-  routerLinkActive="active">
+<div *ngIf="document">
 
-  <div class="pull-left">
-    <h4 class="list-group-item-heading">
-      {{ document.name }}
-    </h4>
-    <p class="list-group-item-text">
-      {{ document.description }}
-    </p>
-  </div>
+  <h2>{{ document.name }}</h2>
 
-</a>
+  <p>{{ document.description || 'No description available.' }}</p>
+
+  <a (click)="onView()">
+    View
+  </a>
+
+  <a [routerLink]="['edit']">
+    Edit
+  </a>
+
+  <a (click)="onDelete()">
+    Delete
+  </a>
+
+</div>

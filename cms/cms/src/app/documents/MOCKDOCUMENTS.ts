@@ -1,4 +1,4 @@
-import {Document} from './document.serive';
+import {Document} from './documents.model';
 
 export const MOCKDOCUMENTS: any[] = [
   {

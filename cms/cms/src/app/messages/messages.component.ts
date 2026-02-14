@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { Message } from './message.model';
 import { MessageService } from './message.service';
+import { RouterModule } from '@angular/router';
 
 import { MessageListComponent } from './message-list/message-list.component';
 import { MessageEditComponent } from './message-edit/message-edit.component';
@@ -15,7 +16,8 @@ import { MessageDetailComponent } from './message-detail/message-detail.componen
     CommonModule,
     MessageListComponent,
     MessageEditComponent,
-    MessageDetailComponent
+    MessageDetailComponent,
+    RouterModule
   ],
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']

@@ -7,22 +7,17 @@
   </div>
 
   <div class="panel-body">
-    <div class="row">
-      <div class="col-sm-5">
-        <cms-contact-list 
-        [contacts]="contacts"
-        (selectedContact)="onContactSelected($event)"></cms-contact-list>
-      </div>
+   <div class="row">
 
-      <div class="col-sm-7">
-        <cms-contact-detail
-          *ngIf="selectedContact"
-          [contact]="selectedContact">
-        </cms-contact-detail>
-        <router-outlet>
-          
-        </router-outlet>
-      </div>
-    </div>
+  <div class="col-md-5">
+    <cms-contact-list></cms-contact-list>
+  </div>
+
+  <div class="col-md-7">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
   </div>
 </div>
