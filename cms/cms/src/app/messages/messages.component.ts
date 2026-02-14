@@ -20,6 +20,7 @@ import { MessageDetailComponent } from './message-detail/message-detail.componen
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
+
 export class MessagesComponent implements OnInit {
 
   messages: Message[] = [];

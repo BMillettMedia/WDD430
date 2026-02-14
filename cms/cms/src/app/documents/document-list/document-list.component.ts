@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Document } from '../document.serive';
+import { Document } from '../documents.model';
 import { DocumentService } from '../document.service';
 import { DocumentItemComponent } from '../document-item/document-item.component';
 
@@ -17,9 +17,17 @@ export class DocumentListComponent implements OnInit {
 
   constructor(private documentService: DocumentService) {}
 
-  ngOnInit() {
-    this.documents = this.documentService.getDocuments();
-  }
+  ngOnInit(): void {
+
+  this.documents = this.documentService.getDocuments();
+
+  this.documentService.documentChangedEvent.subscribe(
+    (documents: Document[]) => {
+      this.documents = documents;
+    }
+  );
+
+}
 
   onSelected(document: Document) {
     this.documentService.documentSelectedEvent.emit(document);

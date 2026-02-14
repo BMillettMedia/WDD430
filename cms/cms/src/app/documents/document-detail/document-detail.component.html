@@ -1,9 +1,31 @@
-<h3>{{ document.name }}</h3>
+<div *ngIf="document">
 
-<div class="button-group">
-  <button class="btn btn-primary">View</button>
-  <button class="btn btn-info">Edit</button>
-  <button class="btn btn-danger">Delete</button>
+  <h3>{{ document.name }}</h3>
+
+  <p>{{ document.description }}</p>
+
+  <div class="btn-group">
+
+    <a
+      class="btn btn-primary"
+      (click)="onView()">
+      View
+    </a>
+
+    <a
+      class="btn btn-info"
+      [routerLink]="['edit']">
+      Edit
+    </a>
+
+    <a
+      class="btn btn-danger"
+      (click)="onDelete()">
+      Delete
+    </a>
+
+  </div>
+
 </div>
 
 <p><strong>Description:</strong></p>
@@ -13,3 +35,25 @@
 <a href="{{ document.url }}" target="_blank">
   {{ document.url || 'No URL provided' }}
 </a>
+
+Buttons
+<button class="btn btn-primary"
+        [routerLink]="['edit']">
+  Edit
+</button>
+
+<button class="btn btn-danger"
+        (click)="onDelete()">
+  Delete
+</button>
+
+<!--Old code to recycle
+<h3>{{ document.name }}</h3>
+
+<div class="button-group">
+  <button class="btn btn-primary">View</button>
+  <button class="btn btn-info">Edit</button>
+  <button class="btn btn-danger">Delete</button>
+</div>
+
+-->

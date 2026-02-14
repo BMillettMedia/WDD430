@@ -13,3 +13,14 @@
   </div>
 
 </a>
+
+<a
+  class="list-group-item"
+  [routerLink]="[message.id]"
+  routerLinkActive="active">
+
+  <h4>{{ message.subject }}</h4>
+  <p>{{ message.sender }}</p>
+
+</a>
+

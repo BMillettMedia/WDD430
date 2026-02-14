@@ -27,4 +27,36 @@ export class ContactService {
     }
     return null;
   }
+
+    contactChangedEvent = new EventEmitter<Contact[]>();
+
+deleteContact(id: string): void {
+
+  this.contacts = this.contacts.filter(c => c.id !== id);
+
+  this.contactChangedEvent.emit(this.contacts.slice());
+
+}
+
+addContact(contact: Contact): void {
+
+  this.contacts.push(contact);
+
+  this.contactChangedEvent.emit(this.contacts.slice());
+
+}
+
+updateContact(original: Contact, updated: Contact): void {
+
+  const pos = this.contacts.indexOf(original);
+
+  if (pos < 0) return;
+
+  this.contacts[pos] = updated;
+
+  this.contactChangedEvent.emit(this.contacts.slice());
+
+}
+
+
 }

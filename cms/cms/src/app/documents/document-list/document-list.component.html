@@ -1,10 +1,20 @@
-<ul class="list-group">
-  <cms-document-item
-    *ngFor="let document of documents"
-    [document]="document"
-    (click)="onSelected(document)">
-  </cms-document-item>
-  <!--<a class="list-group-item">Document 1</a>
-  <a class="list-group-item">Document 2</a>
-  <a class="list-group-item">Document 3</a>-->
-</ul>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3>Documents</h3>
+    <a
+      class="btn btn-success pull-right"
+      [routerLink]="['new']">
+      New Document
+    </a>
+  </div>
+
+  <div class="panel-body">
+
+    <cms-document-item
+      *ngFor="let document of documents"
+      [document]="document">
+    </cms-document-item>
+
+  </div>
+
+</div>

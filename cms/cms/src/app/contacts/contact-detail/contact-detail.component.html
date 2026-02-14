@@ -1,3 +1,24 @@
+<div *ngIf="contact">
+
+  <h3>{{ contact.name }}</h3>
+
+  <p>Email: {{ contact.email }}</p>
+  <p>Phone: {{ contact.phone }}</p>
+
+  <button class="btn btn-primary"
+          [routerLink]="['edit']">
+    Edit
+  </button>
+
+  <button class="btn btn-danger"
+          (click)="onDelete()">
+    Delete
+  </button>
+
+</div>
+
+
+<!--old code
 <div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title">{{ contact.name }}</h3>
@@ -16,4 +37,4 @@
   <div *ngIf="!contact">
   <p>Please select a contact.</p>
 </div>
-</div>
+</div>-->

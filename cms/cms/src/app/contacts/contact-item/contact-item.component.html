@@ -1,8 +1,26 @@
+<a class="list-group-item clearfix"
+   [routerLink]="[contact.id]"
+   routerLinkActive="active">
+
+  <h4 class="list-group-item-heading">
+    {{ contact.name }}
+  </h4>
+
+  <p class="list-group-item-text">
+    {{ contact.email }}
+  </p>
+
+</a>
+
+
+
 <!--old code
 <a class="list-group-item clearfix" (click)="onSelected()">
     <img [src]="contact.imageUrl" alt="" class="img-circle" width="50">
             {{ contact.name }}
 </a>-->
+
+<!--more old code to recycle from
 <li class="list-group-item clearfix contact-item">
   <span class="contact-name">{{ contact.name }}</span>
   <div>
@@ -13,7 +31,7 @@
     class="img-circle pull-right"
     width="40"
     height="40">
-</li>    
+</li>-->
 
 
 <!--mobile logic
