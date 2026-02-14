@@ -1,32 +1,23 @@
 <div *ngIf="document">
 
-  <h3>{{ document.name }}</h3>
+  <h2>{{ document.name }}</h2>
 
-  <p>{{ document.description }}</p>
+  <p>{{ document.description || 'No description available.' }}</p>
 
-  <div class="btn-group">
+  <a (click)="onView()">
+    View Document
+  </a>
 
-    <a
-      class="btn btn-primary"
-      (click)="onView()">
-      View
-    </a>
+  <a [routerLink]="['edit']">
+    Edit
+  </a>
 
-    <a
-      class="btn btn-info"
-      [routerLink]="['edit']">
-      Edit
-    </a>
-
-    <a
-      class="btn btn-danger"
-      (click)="onDelete()">
-      Delete
-    </a>
-
-  </div>
+  <a (click)="onDelete()">
+    Delete
+  </a>
 
 </div>
+
 
 <p><strong>Description:</strong></p>
 <p>{{ document.description || 'No description available.' }}</p>

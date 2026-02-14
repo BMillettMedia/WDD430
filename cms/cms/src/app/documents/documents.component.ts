@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Document } from './document.serive';
+import { Document } from './documents.model';
+import { RouterOutlet } from '@angular/router';
 import { DocumentService } from './document.service';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
@@ -11,7 +12,8 @@ import { DocumentDetailComponent } from './document-detail/document-detail.compo
   imports: [
     CommonModule,
     DocumentListComponent,
-    DocumentDetailComponent
+    DocumentDetailComponent,
+    RouterOutlet
   ],
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.css']

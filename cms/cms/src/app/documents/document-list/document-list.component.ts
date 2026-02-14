@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Document } from '../documents.model';
 import { DocumentService } from '../document.service';
 import { DocumentItemComponent } from '../document-item/document-item.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'cms-document-list',
   standalone: true,
-  imports: [CommonModule, DocumentItemComponent],
+  imports: [CommonModule, DocumentItemComponent,RouterModule],
   templateUrl: './document-list.component.html',
   styleUrls: ['./document-list.component.css']
 })
