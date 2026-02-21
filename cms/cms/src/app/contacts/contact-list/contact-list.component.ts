@@ -9,7 +9,10 @@ import { ContactItemComponent } from '../contact-item/contact-item.component';
 @Component({
   selector: 'cms-contact-list',
   standalone: true,
-  imports: [CommonModule, ContactItemComponent],
+  imports: [
+    CommonModule,
+    ContactItemComponent
+  ],
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css']
 })
@@ -23,18 +26,32 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    // Load initial contacts
     this.contacts = this.contactService.getContacts();
 
-    this.subscription = this.contactService.contactListChangedEvent
-      .subscribe(
-        (contactsList: Contact[]) => {
-          this.contacts = contactsList;
-        }
-      );
+    // Subscribe to contact list updates
+    this.subscription = this.contactService.contactListChangedEvent.subscribe(
+      (contacts: Contact[]) => {
+        this.contacts = contacts;
+      }
+    );
+
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+
+    // Prevent memory leaks
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+  }
+
+  onSelected(contact: Contact): void {
+
+    // Notify service which contact was selected
+    this.contactService.contactSelectedEvent.emit(contact);
+
   }
 
 }

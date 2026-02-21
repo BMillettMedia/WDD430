@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 import { Document } from '../documents.model';
 import { DocumentService } from '../document.service';
-import { WindRefService } from '../../wind-ref.service';
 
 @Component({
   selector: 'cms-document-detail',
@@ -13,50 +12,24 @@ import { WindRefService } from '../../wind-ref.service';
   templateUrl: './document-detail.component.html',
   styleUrls: ['./document-detail.component.css']
 })
-export class DocumentDetailComponent implements OnInit {
+export class DocumentDetailComponent {
 
-  document: Document | null = null;
-
-  nativeWindow: any;
+  @Input() document!: Document;
 
   constructor(
     private documentService: DocumentService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private windRefService: WindRefService
+    private router: Router
   ) {}
-
-  ngOnInit(): void {
-
-    this.nativeWindow = this.windRefService.getNativeWindow();
-
-    this.route.params.subscribe(params => {
-
-      const id: string = params['id'];
-
-      const doc = this.documentService.getDocument(id);
-
-      if (doc) {
-        this.document = doc;
-      }
-
-    });
-
-  }
 
   onView(): void {
 
-    if (!this.document) return;
-
-    this.nativeWindow.open(this.document.url);
+    this.documentService.documentSelectedEvent.emit(this.document);
 
   }
 
   onDelete(): void {
 
-    if (!this.document) return;
-
-    this.documentService.deleteDocument(this.document.id);
+    this.documentService.deleteDocument(this.document);
 
     this.router.navigate(['/documents']);
 

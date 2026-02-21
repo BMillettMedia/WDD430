@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Contact } from './contact.model';
@@ -9,6 +9,10 @@ import { MOCKCONTACTS } from './MOCKCONTACTS';
 })
 export class ContactService {
 
+  // Emits when a contact is selected
+  contactSelectedEvent = new EventEmitter<Contact>();
+
+  // Emits when contact list changes
   contactListChangedEvent = new Subject<Contact[]>();
 
   private contacts: Contact[] = [];
@@ -23,40 +27,28 @@ export class ContactService {
 
   }
 
-  // =========================
-  // GET ALL CONTACTS
-  // =========================
   getContacts(): Contact[] {
     return this.contacts.slice();
   }
 
-  // =========================
-  // GET SINGLE CONTACT
-  // =========================
   getContact(id: string): Contact | null {
 
     for (let contact of this.contacts) {
-
       if (contact.id === id) {
         return contact;
       }
-
     }
 
     return null;
-
   }
 
-  // =========================
-  // GET MAX ID
-  // =========================
   getMaxId(): number {
 
     let maxId = 0;
 
     for (let contact of this.contacts) {
 
-      const currentId = parseInt(contact.id);
+      const currentId = parseInt(contact.id, 10);
 
       if (currentId > maxId) {
         maxId = currentId;
@@ -65,12 +57,8 @@ export class ContactService {
     }
 
     return maxId;
-
   }
 
-  // =========================
-  // ADD CONTACT
-  // =========================
   addContact(newContact: Contact): void {
 
     if (!newContact) return;
@@ -81,19 +69,11 @@ export class ContactService {
 
     this.contacts.push(newContact);
 
-    this.contactListChangedEvent.next(
-      this.contacts.slice()
-    );
+    this.contactListChangedEvent.next(this.contacts.slice());
 
   }
 
-  // =========================
-  // UPDATE CONTACT
-  // =========================
-  updateContact(
-    originalContact: Contact,
-    newContact: Contact
-  ): void {
+  updateContact(originalContact: Contact, newContact: Contact): void {
 
     if (!originalContact || !newContact) return;
 
@@ -105,15 +85,10 @@ export class ContactService {
 
     this.contacts[pos] = newContact;
 
-    this.contactListChangedEvent.next(
-      this.contacts.slice()
-    );
+    this.contactListChangedEvent.next(this.contacts.slice());
 
   }
 
-  // =========================
-  // DELETE CONTACT
-  // =========================
   deleteContact(contact: Contact): void {
 
     if (!contact) return;
@@ -124,9 +99,7 @@ export class ContactService {
 
     this.contacts.splice(pos, 1);
 
-    this.contactListChangedEvent.next(
-      this.contacts.slice()
-    );
+    this.contactListChangedEvent.next(this.contacts.slice());
 
   }
 
