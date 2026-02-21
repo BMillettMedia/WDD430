@@ -42,7 +42,7 @@ export class DocumentItemComponent {
   onDelete(): void {
     if (!this.document?.id) return;
 
-    this.documentService.deleteDocument(this.document.id);
+    this.documentService.deleteDocument(this.document);
     this.router.navigate(['/documents']);
   }
 

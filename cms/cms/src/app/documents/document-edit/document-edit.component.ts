@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { Document } from '../documents.model';
 import { DocumentService } from '../document.service';
@@ -9,7 +9,7 @@ import { DocumentService } from '../document.service';
 @Component({
   selector: 'cms-document-edit',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './document-edit.component.html',
   styleUrls: ['./document-edit.component.css']
 })
@@ -17,14 +17,9 @@ export class DocumentEditComponent implements OnInit {
 
   originalDocument: Document | null = null;
 
-  document: Document = new Document(
-    '',
-    '',
-    '',
-    ''
-  );
+  document: Document = new Document('', '', '', '');
 
-  editMode = false;
+  editMode: boolean = false;
 
   constructor(
     private documentService: DocumentService,
@@ -43,7 +38,7 @@ export class DocumentEditComponent implements OnInit {
         return;
       }
 
-      const foundDocument = this.documentService.getDocument(id);
+      this.originalDocument = this.documentService.getDocument(id);
 
       if (!this.originalDocument) {
         return;
@@ -51,12 +46,12 @@ export class DocumentEditComponent implements OnInit {
 
       this.editMode = true;
 
-      this.document = new Document(
-        this.originalDocument.id,
-        this.originalDocument.name,
-        this.originalDocument.description,
-        this.originalDocument.url
-      );
+      this.document = {
+        id: this.originalDocument.id,
+        name: this.originalDocument.name,
+        description: this.originalDocument.description,
+        url: this.originalDocument.url
+      };
 
     });
 
@@ -64,26 +59,31 @@ export class DocumentEditComponent implements OnInit {
 
   onSave(): void {
 
+    const newDocument = new Document(
+      '',
+      this.document.name,
+      this.document.description,
+      this.document.url
+    );
+
     if (this.editMode && this.originalDocument) {
 
-      this.documentService.updateDocument(this.originalDocument, this.document);
+      this.documentService.updateDocument(
+        this.originalDocument,
+        newDocument
+      );
 
     } else {
 
-      this.document.id = Date.now().toString();
-
-      this.documentService.addDocument(this.document);
+      this.documentService.addDocument(newDocument);
 
     }
 
     this.router.navigate(['/documents']);
-
   }
 
   onCancel(): void {
-
     this.router.navigate(['/documents']);
-
   }
 
 }

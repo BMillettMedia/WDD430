@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Document } from './documents.model';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet,RouterModule } from '@angular/router';
 import { DocumentService } from './document.service';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
@@ -13,14 +13,17 @@ import { DocumentDetailComponent } from './document-detail/document-detail.compo
     CommonModule,
     DocumentListComponent,
     DocumentDetailComponent,
-    RouterOutlet
+    RouterOutlet,
+    RouterModule
   ],
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.css']
 })
-export class DocumentsComponent implements OnInit {
+export class DocumentsComponent {
 
-  selectedDocument!: Document;
+
+  
+  /*selectedDocument!: Document;
 
   constructor(private documentService: DocumentService) {}
 
@@ -29,6 +32,6 @@ export class DocumentsComponent implements OnInit {
       (document: Document) => {
         this.selectedDocument = document;
       }
-    );
-  }
+    );*/
+  
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
@@ -9,7 +9,7 @@ import { ContactService } from '../contact.service';
 @Component({
   selector: 'cms-contact-edit',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './contact-edit.component.html',
   styleUrls: ['./contact-edit.component.css']
 })
@@ -26,7 +26,7 @@ export class ContactEditComponent implements OnInit {
     null
   );
 
-  editMode = false;
+  editMode: boolean = false;
 
   constructor(
     private contactService: ContactService,
@@ -40,21 +40,29 @@ export class ContactEditComponent implements OnInit {
 
       const id = params['id'];
 
-      if (!id) return;
+      if (!id) {
+        this.editMode = false;
+        return;
+      }
 
-      this.originalContact = this.contactService.getContact(id);
+      const foundContact = this.contactService.getContact(id);
 
-      if (!this.originalContact) return;
+      if (!foundContact) {
+        return;
+      }
 
       this.editMode = true;
 
+      this.originalContact = foundContact;
+
+      // FIXED: Proper Contact object creation
       this.contact = new Contact(
-        this.originalContact.id,
-        this.originalContact.name,
-        this.originalContact.email,
-        this.originalContact.phone,
-        this.originalContact.imageUrl,
-        this.originalContact.group
+        foundContact.id,
+        foundContact.name,
+        foundContact.email,
+        foundContact.phone,
+        foundContact.imageUrl,
+        foundContact.group
       );
 
     });
@@ -65,18 +73,18 @@ export class ContactEditComponent implements OnInit {
 
     if (this.editMode && this.originalContact) {
 
-      this.contactService.updateContact(this.originalContact, this.contact);
+      this.contactService.updateContact(
+        this.originalContact,
+        this.contact
+      );
 
     } else {
-
-      this.contact.id = Date.now().toString();
 
       this.contactService.addContact(this.contact);
 
     }
 
     this.router.navigate(['/contacts']);
-
   }
 
   onCancel(): void {

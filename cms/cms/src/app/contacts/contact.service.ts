@@ -1,4 +1,6 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+
 import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
 
@@ -7,56 +9,125 @@ import { MOCKCONTACTS } from './MOCKCONTACTS';
 })
 export class ContactService {
 
-  contacts: Contact[] = [];
+  contactListChangedEvent = new Subject<Contact[]>();
 
-  contactSelectedEvent = new EventEmitter<Contact>();
+  private contacts: Contact[] = [];
+
+  maxContactId: number = 0;
 
   constructor() {
+
     this.contacts = MOCKCONTACTS;
+
+    this.maxContactId = this.getMaxId();
+
   }
 
+  // =========================
+  // GET ALL CONTACTS
+  // =========================
   getContacts(): Contact[] {
     return this.contacts.slice();
   }
 
+  // =========================
+  // GET SINGLE CONTACT
+  // =========================
   getContact(id: string): Contact | null {
-    for (const contact of this.contacts) {
+
+    for (let contact of this.contacts) {
+
       if (contact.id === id) {
         return contact;
       }
+
     }
+
     return null;
+
   }
 
-    contactChangedEvent = new EventEmitter<Contact[]>();
+  // =========================
+  // GET MAX ID
+  // =========================
+  getMaxId(): number {
 
-deleteContact(id: string): void {
+    let maxId = 0;
 
-  this.contacts = this.contacts.filter(c => c.id !== id);
+    for (let contact of this.contacts) {
 
-  this.contactChangedEvent.emit(this.contacts.slice());
+      const currentId = parseInt(contact.id);
 
-}
+      if (currentId > maxId) {
+        maxId = currentId;
+      }
 
-addContact(contact: Contact): void {
+    }
 
-  this.contacts.push(contact);
+    return maxId;
 
-  this.contactChangedEvent.emit(this.contacts.slice());
+  }
 
-}
+  // =========================
+  // ADD CONTACT
+  // =========================
+  addContact(newContact: Contact): void {
 
-updateContact(original: Contact, updated: Contact): void {
+    if (!newContact) return;
 
-  const pos = this.contacts.indexOf(original);
+    this.maxContactId++;
 
-  if (pos < 0) return;
+    newContact.id = this.maxContactId.toString();
 
-  this.contacts[pos] = updated;
+    this.contacts.push(newContact);
 
-  this.contactChangedEvent.emit(this.contacts.slice());
+    this.contactListChangedEvent.next(
+      this.contacts.slice()
+    );
 
-}
+  }
 
+  // =========================
+  // UPDATE CONTACT
+  // =========================
+  updateContact(
+    originalContact: Contact,
+    newContact: Contact
+  ): void {
+
+    if (!originalContact || !newContact) return;
+
+    const pos = this.contacts.indexOf(originalContact);
+
+    if (pos < 0) return;
+
+    newContact.id = originalContact.id;
+
+    this.contacts[pos] = newContact;
+
+    this.contactListChangedEvent.next(
+      this.contacts.slice()
+    );
+
+  }
+
+  // =========================
+  // DELETE CONTACT
+  // =========================
+  deleteContact(contact: Contact): void {
+
+    if (!contact) return;
+
+    const pos = this.contacts.indexOf(contact);
+
+    if (pos < 0) return;
+
+    this.contacts.splice(pos, 1);
+
+    this.contactListChangedEvent.next(
+      this.contacts.slice()
+    );
+
+  }
 
 }

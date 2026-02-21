@@ -9,7 +9,11 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'cms-contacts',
   standalone: true,
-  imports: [CommonModule, RouterModule,ContactListComponent, ContactDetailComponent],
+  imports: [CommonModule, 
+    RouterModule,
+    ContactListComponent, 
+    ContactDetailComponent
+  ],
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css']
 })
