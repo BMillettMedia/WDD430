@@ -5,11 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
+import { ContactItemComponent } from '../contact-item/contact-item.component';
+
 
 @Component({
   selector: 'cms-contact-edit',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ContactItemComponent],
   templateUrl: './contact-edit.component.html',
   styleUrls: ['./contact-edit.component.css']
 })
@@ -21,6 +23,8 @@ export class ContactEditComponent implements OnInit {
   editMode = false;
   id!: string;
 
+  groupContacts: Contact[] = []; 
+  
   constructor(
     private contactService: ContactService,
     private route: ActivatedRoute,
@@ -68,7 +72,12 @@ export class ContactEditComponent implements OnInit {
         foundContact.group
       );
 
+      // ✅ FIX: initialize groupContacts safely
+      this.groupContacts = foundContact.group
+    ?   foundContact.group.slice()
+        : [];
     });
+
 
   }
 
@@ -96,6 +105,10 @@ export class ContactEditComponent implements OnInit {
 
   onCancel(): void {
     this.router.navigate(['/contacts']);
+  }
+
+  onRemoveItem(index: number): void {
+    this.groupContacts.splice(index,1);
   }
 
 }
