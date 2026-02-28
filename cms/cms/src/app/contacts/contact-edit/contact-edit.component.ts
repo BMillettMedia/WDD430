@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
@@ -9,24 +9,17 @@ import { ContactService } from '../contact.service';
 @Component({
   selector: 'cms-contact-edit',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './contact-edit.component.html',
   styleUrls: ['./contact-edit.component.css']
 })
 export class ContactEditComponent implements OnInit {
 
-  originalContact: Contact | null = null;
+  originalContact!: Contact;   // not nullable anymore
+  contact!: Contact;
 
-  contact: Contact = new Contact(
-    '',
-    '',
-    '',
-    '',
-    '',
-    null
-  );
-
-  editMode: boolean = false;
+  editMode = false;
+  id!: string;
 
   constructor(
     private contactService: ContactService,
@@ -38,24 +31,34 @@ export class ContactEditComponent implements OnInit {
 
     this.route.params.subscribe(params => {
 
-      const id = params['id'];
+      this.id = params['id'];
 
-      if (!id) {
+      // ADD MODE
+      if (!this.id) {
         this.editMode = false;
+        this.contact = new Contact(
+          '',
+          '',
+          '',
+          '',
+          '',
+          null
+        );
         return;
       }
 
-      const foundContact = this.contactService.getContact(id);
+      // EDIT MODE
+      const foundContact = this.contactService.getContact(this.id);
 
       if (!foundContact) {
+        this.router.navigate(['/contacts']);
         return;
       }
 
+      this.originalContact = foundContact;
       this.editMode = true;
 
-      this.originalContact = foundContact;
-
-      // FIXED: Proper Contact object creation
+      // Clone safely
       this.contact = new Contact(
         foundContact.id,
         foundContact.name,
@@ -69,28 +72,30 @@ export class ContactEditComponent implements OnInit {
 
   }
 
-  onSave(): void {
+  onSubmit(form: NgForm): void {
 
-    if (this.editMode && this.originalContact) {
+    const value = form.value;
 
-      this.contactService.updateContact(
-        this.originalContact,
-        this.contact
-      );
+    const newContact = new Contact(
+      this.originalContact?.id ?? '',
+      value.name,
+      value.email,
+      value.phone,
+      value.imageUrl ?? '',
+      this.contact.group ?? null
+    );
 
+    if (this.editMode) {
+      this.contactService.updateContact(this.originalContact, newContact);
     } else {
-
-      this.contactService.addContact(this.contact);
-
+      this.contactService.addContact(newContact);
     }
 
     this.router.navigate(['/contacts']);
   }
 
   onCancel(): void {
-
     this.router.navigate(['/contacts']);
-
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Document } from '../documents.model';
 import { DocumentService } from '../document.service';
@@ -9,17 +9,17 @@ import { DocumentService } from '../document.service';
 @Component({
   selector: 'cms-document-edit',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './document-edit.component.html',
   styleUrls: ['./document-edit.component.css']
 })
 export class DocumentEditComponent implements OnInit {
 
-  originalDocument: Document | null = null;
+  originalDocument!: Document;   // ← not nullable anymore
+  document!: Document;
 
-  document: Document = new Document('', '', '', '');
-
-  editMode: boolean = false;
+  editMode = false;
+  id!: string;
 
   constructor(
     private documentService: DocumentService,
@@ -31,52 +31,51 @@ export class DocumentEditComponent implements OnInit {
 
     this.route.params.subscribe(params => {
 
-      const id = params['id'];
+      this.id = params['id'];
 
-      if (!id) {
+      // ADD MODE
+      if (!this.id) {
         this.editMode = false;
+        this.document = new Document('', '', '', '');
         return;
       }
 
-      this.originalDocument = this.documentService.getDocument(id);
+      // EDIT MODE
+      const doc = this.documentService.getDocument(this.id);
 
-      if (!this.originalDocument) {
+      if (!doc) {
+        this.router.navigate(['/documents']);
         return;
       }
 
+      this.originalDocument = doc;
       this.editMode = true;
 
-      this.document = {
-        id: this.originalDocument.id,
-        name: this.originalDocument.name,
-        description: this.originalDocument.description,
-        url: this.originalDocument.url
-      };
-
+      // clone object so we don't mutate original directly
+      this.document = new Document(
+        doc.id,
+        doc.name,
+        doc.description,
+        doc.url
+      );
     });
-
   }
 
-  onSave(): void {
+  onSubmit(form: NgForm): void {
+
+    const value = form.value;
 
     const newDocument = new Document(
-      '',
-      this.document.name,
-      this.document.description,
-      this.document.url
+      this.originalDocument?.id ?? '',
+      value.name,
+      value.description,
+      value.url
     );
 
-    if (this.editMode && this.originalDocument) {
-
-      this.documentService.updateDocument(
-        this.originalDocument,
-        newDocument
-      );
-
+    if (this.editMode) {
+      this.documentService.updateDocument(this.originalDocument, newDocument);
     } else {
-
       this.documentService.addDocument(newDocument);
-
     }
 
     this.router.navigate(['/documents']);
