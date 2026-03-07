@@ -31,9 +31,17 @@ export class MessagesComponent implements OnInit {
   constructor(private messageService: MessageService) {}
 
   ngOnInit(): void {
-    this.messages = this.messageService.getMessages();
+
+    this.messageService.messageListChangedEvent.subscribe(
+      (messages: Message[]) => {
+        this.messages = messages;
+      }
+    );
+
+    this.messageService.getMessages();
   }
 
+  // ✅ Fix for the template error
   onMessageSelected(message: Message): void {
     this.selectedMessage = message;
   }

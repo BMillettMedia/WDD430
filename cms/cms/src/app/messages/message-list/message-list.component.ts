@@ -1,5 +1,7 @@
-import { Component, OnInit, Input ,Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
+
 import { Message } from '../message.model';
 import { MessageService } from '../message.service';
 import { MessageItemComponent } from '../message-item/message-item.component';
@@ -11,38 +13,31 @@ import { MessageItemComponent } from '../message-item/message-item.component';
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.css']
 })
-export class MessageListComponent implements OnInit {
-
-  //messages: Message[] = [];
+export class MessageListComponent implements OnInit, OnDestroy {
 
   @Input() messages: Message[] = [];
   @Output() selectedMessage = new EventEmitter<Message>();
 
+  subscription!: Subscription;
+
   constructor(private messageService: MessageService) {}
 
-  /*ngOnInit(): void {
-    // Initial load
-    this.messages = this.messageService.getMessages();
+  ngOnInit(): void {
 
-    // Listen for changes
-    this.messageService.messageChangedEvent.subscribe(
-      (messages: Message[]) => {
-        this.messages = messages;
-      }
-    );
-  }*/
+    this.subscription =
+      this.messageService.messageListChangedEvent
+        .subscribe((messages: Message[]) => {
+          this.messages = messages;
+        });
 
-    ngOnInit(): void {
+    this.messageService.getMessages();
+  }
 
-  this.subscription =
-    this.messageService.messageListChangedEvent
-      .subscribe((messages) => {
-        this.messages = messages;
-      });
-
-  this.messageService.getMessages();
-}
-
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   onSelected(message: Message): void {
     this.selectedMessage.emit(message);

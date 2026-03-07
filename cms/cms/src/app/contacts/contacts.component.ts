@@ -9,9 +9,10 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'cms-contacts',
   standalone: true,
-  imports: [CommonModule, 
+  imports: [
+    CommonModule,
     RouterModule,
-    ContactListComponent, 
+    ContactListComponent,
     ContactDetailComponent
   ],
   templateUrl: './contacts.component.html',
@@ -25,7 +26,14 @@ export class ContactsComponent implements OnInit {
   constructor(private contactService: ContactService) {}
 
   ngOnInit(): void {
-    this.contacts = this.contactService.getContacts();
+
+    this.contactService.contactListChangedEvent.subscribe(
+      (contacts: Contact[]) => {
+        this.contacts = contacts;
+      }
+    );
+
+    this.contactService.getContacts();
   }
 
   onContactSelected(contact: Contact): void {

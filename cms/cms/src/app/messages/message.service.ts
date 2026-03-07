@@ -40,6 +40,20 @@ export class MessageService {
   }
 
   // =========================
+  // GET SINGLE MESSAGE (ADDED FIX)
+  // =========================
+  getMessage(id: string): Message | null {
+
+    for (let message of this.messages) {
+      if (message.id === id) {
+        return message;
+      }
+    }
+
+    return null;
+  }
+
+  // =========================
   // ADD MESSAGE
   // =========================
   addMessage(message: Message): void {

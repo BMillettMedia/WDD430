@@ -1,8 +1,8 @@
-import { ContactFilterPipe } from './contact-filter-pipe';
+import { ContactsFilterPipe } from './contact-filter-pipe';
 
 describe('ContactFilterPipe', () => {
   it('create an instance', () => {
-    const pipe = new ContactFilterPipe();
+    const pipe = new ContactsFilterPipe ();
     expect(pipe).toBeTruthy();
   });
 });

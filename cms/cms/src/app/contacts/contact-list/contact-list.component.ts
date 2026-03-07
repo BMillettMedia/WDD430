@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
 import { ContactItemComponent } from '../contact-item/contact-item.component';
-import { ContactsFilterPipe } from '../contacts-filter-pipe.ts';
+import { ContactsFilterPipe } from '../contact-filter-pipe';
 
 @Component({
   selector: 'cms-contact-list',
