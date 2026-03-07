@@ -20,7 +20,7 @@ export class MessageListComponent implements OnInit {
 
   constructor(private messageService: MessageService) {}
 
-  ngOnInit(): void {
+  /*ngOnInit(): void {
     // Initial load
     this.messages = this.messageService.getMessages();
 
@@ -30,7 +30,18 @@ export class MessageListComponent implements OnInit {
         this.messages = messages;
       }
     );
-  }
+  }*/
+
+    ngOnInit(): void {
+
+  this.subscription =
+    this.messageService.messageListChangedEvent
+      .subscribe((messages) => {
+        this.messages = messages;
+      });
+
+  this.messageService.getMessages();
+}
 
 
   onSelected(message: Message): void {

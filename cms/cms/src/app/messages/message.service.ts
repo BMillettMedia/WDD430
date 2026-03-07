@@ -1,35 +1,93 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { Message } from './message.model';
-import { MOCKMESSAGES } from './MOCKMESSAGES';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
 
+  messageListChangedEvent = new Subject<Message[]>();
+
   messages: Message[] = [];
+  maxMessageId: number = 0;
 
-  messageChangedEvent = new EventEmitter<Message[]>();
+  // Replace with Firebase URL
+  private firebaseUrl =
+    'https://wdd430-4e51e-default-rtdb.firebaseio.com/messages.json';
 
-  constructor() {
-    this.messages = MOCKMESSAGES;
+  constructor(private http: HttpClient) {}
+
+  // =========================
+  // GET MESSAGES
+  // =========================
+  getMessages(): void {
+
+    this.http.get<Message[]>(this.firebaseUrl)
+      .subscribe(
+        (messages: Message[]) => {
+
+          this.messages = messages || [];
+          this.maxMessageId = this.getMaxId();
+
+          this.messageListChangedEvent
+            .next(this.messages.slice());
+        },
+        (error) => console.error(error)
+      );
   }
 
-  getMessages(): Message[] {
-    return this.messages.slice();
-  }
+  // =========================
+  // ADD MESSAGE
+  // =========================
+  addMessage(message: Message): void {
 
-  getMessage(id: string): Message | null {
-    for (const message of this.messages) {
-      if (message.id === id) {
-        return message;
-      }
-    }
-    return null;
-  }
+    if (!message) return;
 
-  addMessage(message: Message) {
+    message.id = (++this.maxMessageId).toString();
+
     this.messages.push(message);
-    this.messageChangedEvent.emit(this.messages.slice());
+    this.storeMessages();
   }
+
+  // =========================
+  // DELETE MESSAGE
+  // =========================
+  deleteMessage(message: Message): void {
+
+    this.messages =
+      this.messages.filter(m => m.id !== message.id);
+
+    this.storeMessages();
+  }
+
+  // =========================
+  // STORE MESSAGES
+  // =========================
+  storeMessages(): void {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    this.http.put(this.firebaseUrl, this.messages, { headers })
+      .subscribe(() => {
+        this.messageListChangedEvent
+          .next(this.messages.slice());
+      });
+  }
+
+  // =========================
+  // GET MAX ID
+  // =========================
+  getMaxId(): number {
+
+    return this.messages.reduce(
+      (max, msg) => Math.max(max, +msg.id),
+      0
+    );
+  }
+
 }

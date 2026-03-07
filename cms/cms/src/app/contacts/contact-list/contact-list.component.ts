@@ -1,17 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
 import { ContactItemComponent } from '../contact-item/contact-item.component';
+import { ContactsFilterPipe } from '../contacts-filter-pipe.ts';
 
 @Component({
   selector: 'cms-contact-list',
   standalone: true,
   imports: [
     CommonModule,
-    ContactItemComponent
+    ContactItemComponent,
+    RouterModule,
+    ContactsFilterPipe
   ],
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css']
@@ -19,6 +23,7 @@ import { ContactItemComponent } from '../contact-item/contact-item.component';
 export class ContactListComponent implements OnInit, OnDestroy {
 
   contacts: Contact[] = [];
+  term: string = '';
 
   private subscription!: Subscription;
 
@@ -26,32 +31,25 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    // Load initial contacts
-    this.contacts = this.contactService.getContacts();
+    // Subscribe FIRST
+    this.subscription =
+      this.contactService.contactListChangedEvent
+        .subscribe((contacts: Contact[]) => {
+          this.contacts = contacts;
+        });
 
-    // Subscribe to contact list updates
-    this.subscription = this.contactService.contactListChangedEvent.subscribe(
-      (contacts: Contact[]) => {
-        this.contacts = contacts;
-      }
-    );
-
+    // Then trigger HTTP fetch
+    this.contactService.getContacts();
   }
 
   ngOnDestroy(): void {
-
-    // Prevent memory leaks
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-
   }
 
-  onSelected(contact: Contact): void {
-
-    // Notify service which contact was selected
-    this.contactService.contactSelectedEvent.emit(contact);
-
+  search(value: string): void {
+    this.term = value;
   }
 
 }

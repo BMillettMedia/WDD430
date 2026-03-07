@@ -1,0 +1,34 @@
+{
+  "0": {
+    "id": "1",
+    "name": "CIT 425 - Data Warehousing",
+    "url": "https://rkjdatawarehousing.wordpress.com/",
+    "children": {
+      "0": {
+        "id": "2",
+        "name": "Project 1 – The Kimball Method",
+        "url": "https://rkjdatawarehousing.wordpress.com/projects/project-1-the-kimball-method/"
+      },
+      "1": {
+        "id": "3",
+        "name": "Project 2 – Data warehouses vs. marts",
+        "url": "https://rkjdatawarehousing.wordpress.com/projects/project-2-data-warehouses-vs-marts/"
+      },
+      "2": {
+        "id": "4",
+        "name": "Project 3 – The ETL Process",
+        "url": "https://rkjdatawarehousing.wordpress.com/projects/project-3-the-etl-process/"
+      }
+    }
+  },
+  "1": {
+    "id": "10",
+    "name": "CIT 460 - Enterprise Development",
+    "url": "https://rkjackson.wordpress.com/"
+  },
+  "2": {
+    "id": "20",
+    "name": "CIT 366 - Full Web Stack Development",
+    "url": "https://content.byui.edu/file/b7c3e5ed-6947-497f-9d32-4e5b6b397cac/1/CIT 366 course description.pdf"
+  }
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "1",
+    "name": "Blaine Robertson",
+    "email": "blaine@email.com",
+    "phone": "555-555-1111",
+    "imageUrl": "assets/images/blainerobertson.png",
+    "group": []
+  },
+  {
+    "id": "2",
+    "name": "Bradley Armstrong",
+    "email": "brad@email.com",
+    "phone": "555-555-2222",
+    "imageUrl": "assets/images/bradleyarmstrong.png",
+    "group": []
+  },
+  {
+    "id": "3",
+    "name": "Brent Moring",
+    "email": "brent@email.com",
+    "phone": "555-555-3333",
+    "imageUrl": "assets/images/brentmoring.png",
+    "group": []
+  },
+  {
+    "id": "4",
+    "name": "Craig Lindstrom",
+    "email": "craig@email.com",
+    "phone": "555-555-4444",
+    "imageUrl": "assets/images/craiglindstrom.png",
+    "group": []
+  }
+]
