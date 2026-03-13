@@ -23,21 +23,27 @@ export class MessageService {
   // =========================
   // GET MESSAGES
   // =========================
-  getMessages(): void {
+getMessages() {
 
-    this.http.get<Message[]>(this.firebaseUrl)
-      .subscribe(
-        (messages: Message[]) => {
+  this.http.get<{message:string, messages:any}>(
+    'http://localhost:3000/messages'
+  )
+  .subscribe(response => {
 
-          this.messages = messages || [];
-          this.maxMessageId = this.getMaxId();
+    this.messages = response.messages.map((message:any) => {
+      return {
+        id: message._id,
+        subject: message.subject,
+        messageText: message.messageText,
+        sender: message.sender
+      };
+    });
 
-          this.messageListChangedEvent
-            .next(this.messages.slice());
-        },
-        (error) => console.error(error)
-      );
-  }
+    this.messageListChangedEvent.next(this.messages.slice());
+
+  });
+
+}
 
   // =========================
   // GET SINGLE MESSAGE (ADDED FIX)

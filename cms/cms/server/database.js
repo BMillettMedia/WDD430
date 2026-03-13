@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/cms', {
+mongoose.connect('mongodb+srv://cmsAdmin:DBm36822758@cluster0.mhqj378.mongodb.net/'
+  /*, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-});//mongodb temp link get new one soon
+}*/
+);//mongodb temp link get new one soon
 
 const db = mongoose.connection;
 

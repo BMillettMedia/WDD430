@@ -3,6 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 require('./server/database');
 
@@ -41,3 +42,6 @@ const port = 3000;
 app.listen(port, () => {
   console.log('Server running on port: ' + port);
 });
+
+/*cors logic*/
+app.use(cors());

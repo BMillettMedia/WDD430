@@ -27,25 +27,29 @@ export class ContactService {
   // =========================
   // GET CONTACTS (HTTP GET)
   // =========================
-  getContacts(): void {
+  getContacts() {
 
-    this.http.get<Contact[]>(this.firebaseUrl)
-      .subscribe(
-        (contacts: Contact[]) => {
+  this.http.get<{message:string, contacts:any}>(
+    'http://localhost:3000/contacts'
+  )
+  .subscribe(response => {
 
-          this.contacts = contacts || [];
-          this.maxContactId = this.getMaxId();
+    this.contacts = response.contacts.map((contact:any) => {
+      return {
+        id: contact._id,
+        name: contact.name,
+        email: contact.email,
+        phone: contact.phone,
+        imageUrl: contact.imageUrl,
+        group: contact.group
+      };
+    });
 
-          this.contacts.sort((a, b) =>
-            a.name < b.name ? -1 : 1
-          );
+    this.contactListChangedEvent.next(this.contacts.slice());
 
-          this.contactListChangedEvent
-            .next(this.contacts.slice());
-        },
-        (error) => console.error(error)
-      );
-  }
+  });
+
+}
 
   // =========================
   // GET SINGLE CONTACT

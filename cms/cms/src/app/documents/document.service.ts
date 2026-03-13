@@ -24,25 +24,28 @@ export class DocumentService {
   // =========================
   // GET ALL DOCUMENTS (HTTP)
   // =========================
-  getDocuments(): void {
+ getDocuments() {
 
-    this.http.get<Document[]>(this.firebaseUrl)
-      .subscribe(
-        (documents: Document[]) => {
+  this.http.get<{message:string, documents:any}>(
+    'http://localhost:3000/documents'
+  )
+  .subscribe(response => {
 
-          this.documents = documents || [];
-          this.maxDocumentId = this.getMaxId();
+    this.documents = response.documents.map((doc:any) => {
+      return {
+        id: doc._id,
+        name: doc.name,
+        description: doc.description,
+        url: doc.url,
+        children: doc.children
+      };
+    });
 
-          this.documents.sort((a, b) =>
-            a.name < b.name ? -1 : 1
-          );
+    this.documentListChangedEvent.next(this.documents.slice());
 
-          this.documentListChangedEvent
-            .next(this.documents.slice());
-        },
-        (error) => console.error(error)
-      );
-  }
+  });
+
+}
 
   // =========================
   // GET SINGLE DOCUMENT
