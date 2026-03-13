@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cors = require('cors');
 
 require('./server/database');
+require('dotenv').config();
 
 var app = express();
 
