@@ -1,10 +1,9 @@
-class message{
-  constructor(id,subject,messageText,sender){
-    this.id=id,
-    this.subject=subject,
-    this.messageText=messageText,
-    this.sender=sender
-  }
-}
+const mongoose = require('mongoose');
 
-module.exports = message;
+const messageSchema = mongoose.Schema({
+  subject: String,
+  msgText: String,
+  sender: String
+});
+
+module.exports = mongoose.model('Message', messageSchema);

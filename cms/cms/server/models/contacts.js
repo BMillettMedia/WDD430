@@ -1,12 +1,11 @@
-class contact{
-  constructor(id,name,email,phone,imageUrl,group){
-    this.id=id,
-    this.name=name,
-    this.email=email,
-    this.phone=phone,
-    this.imageUrl=imageUrl,
-    this.group=group
-  }
-}
+const mongoose = require('mongoose');
 
-module.exports = contact;
+const contactSchema = mongoose.Schema({
+  name: String,
+  email: String,
+  phone: String,
+  imageUrl: String,
+  group: String
+});
+
+module.exports = mongoose.model('Contact', contactSchema);

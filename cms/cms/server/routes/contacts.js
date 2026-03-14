@@ -1,68 +1,46 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const Contact = require('../models/contact');
 
-var Contact = require('../models/contact');
+router.get('/', async (req, res) => {
 
-var contacts = [
-  new Contact('1', 'John Doe', 'john@email.com', '555-5555', '', null)
-];
+  try {
 
-/* GET all contacts */
-router.get('/', (req, res) => {
-  res.status(200).json({
-    message: 'Contacts fetched successfully',
-    contacts: contacts
-  });
-});
+    const contacts = await Contact.find();
 
-/* CREATE contact */
-router.post('/', (req, res) => {
+    res.status(200).json({
+      message: "Contacts fetched successfully",
+      contacts: contacts
+    });
 
-  const contact = new Contact(
-    req.body.id,
-    req.body.name,
-    req.body.email,
-    req.body.phone,
-    req.body.imageUrl,
-    req.body.group
-  );
-
-  contacts.push(contact);
-
-  res.status(201).json({
-    message: 'Contact added successfully',
-    contact: contact
-  });
-
-});
-
-/* UPDATE contact */
-router.put('/:id', (req, res) => {
-
-  const contact = contacts.find(c => c.id === req.params.id);
-
-  if (!contact) {
-    return res.status(404).json({ message: 'Contact not found' });
+  } catch (err) {
+    res.status(500).json({ error: err });
   }
 
-  contact.name = req.body.name;
-  contact.email = req.body.email;
-  contact.phone = req.body.phone;
-
-  res.status(200).json({
-    message: 'Contact updated successfully'
-  });
-
 });
 
-/* DELETE contact */
-router.delete('/:id', (req, res) => {
+router.post('/', async (req, res) => {
 
-  contacts = contacts.filter(c => c.id !== req.params.id);
+  try {
 
-  res.status(200).json({
-    message: 'Contact deleted successfully'
-  });
+    const contact = new Contact({
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      imageUrl: req.body.imageUrl,
+      group: req.body.group
+    });
+
+    const result = await contact.save();
+
+    res.status(201).json({
+      message: "Contact added successfully",
+      contact: result
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 
 });
 
