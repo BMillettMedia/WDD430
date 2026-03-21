@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Document } from '../documents.model';
 import { DocumentService } from '../document.service';
@@ -15,11 +16,13 @@ import { DocumentService } from '../document.service';
 })
 export class DocumentEditComponent implements OnInit {
 
-  originalDocument!: Document;   // ← not nullable anymore
+  originalDocument!: Document;
   document!: Document;
 
   editMode = false;
   id!: string;
+
+  private subscription!: Subscription;
 
   constructor(
     private documentService: DocumentService,
@@ -41,23 +44,31 @@ export class DocumentEditComponent implements OnInit {
       }
 
       // EDIT MODE
-      const doc = this.documentService.getDocument(this.id);
-
-      if (!doc) {
-        this.router.navigate(['/documents']);
-        return;
-      }
-
-      this.originalDocument = doc;
       this.editMode = true;
 
-      // clone object so we don't mutate original directly
-      this.document = new Document(
-        doc.id,
-        doc.name,
-        doc.description,
-        doc.url
-      );
+      // 🔥 SUBSCRIBE to data instead of calling getDocument directly
+      this.subscription = this.documentService.documentListChangedEvent
+        .subscribe((documents: Document[]) => {
+
+          const doc = documents.find(d => d.id === this.id);
+
+          if (!doc) {
+            this.router.navigate(['/documents']);
+            return;
+          }
+
+          this.originalDocument = doc;
+
+          this.document = new Document(
+            doc.id,
+            doc.name,
+            doc.description,
+            doc.url
+          );
+        });
+
+      // 🔥 Load documents from backend
+      this.documentService.getDocuments();
     });
   }
 
@@ -85,4 +96,9 @@ export class DocumentEditComponent implements OnInit {
     this.router.navigate(['/documents']);
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }

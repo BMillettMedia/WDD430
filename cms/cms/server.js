@@ -1,22 +1,22 @@
-var express = require('express');
-var path = require('path');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
-
-require('./server/database');
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
-var app = express();
+const app = express();
 
-/* IMPORT ROUTES */
-var index = require('./server/routes/app');
-var documentRoutes = require('./server/routes/documents');
-var messageRoutes = require('./server/routes/messages');
-var contactRoutes = require('./server/routes/contacts');
+/* ROUTES */
+const index = require('./server/routes/app');
+const documentRoutes = require('./server/routes/documents');
+const messageRoutes = require('./server/routes/messages');
+const contactRoutes = require('./server/routes/contacts');
 
 /* MIDDLEWARE */
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,23 +31,21 @@ app.use('/documents', documentRoutes);
 app.use('/messages', messageRoutes);
 app.use('/contacts', contactRoutes);
 
-/* INVALID URL HANDLER */
+/* INVALID ROUTE */
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'dist/cms/browser/index.html'));
 });
 
+/* MONGODB CONNECTION */
+mongoose.connect('mongodb://localhost:27017/cms', {
+  useNewUrlParser: true,
+})
+.then(() => console.log('✅ Connected to MongoDB'))
+.catch(err => console.log('❌ MongoDB connection error:', err));
+
 /* PORT */
 const port = process.env.PORT || 3000;
-app.set('port', port);
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log('🚀 Server running on port:', port);
 });
-
-/* START SERVER */
-app.listen(port, () => {
-  console.log('Server running on port: ' + port);
-});
-
-/*cors logic*/
-app.use(cors());

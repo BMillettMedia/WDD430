@@ -3,14 +3,12 @@
    style="cursor: pointer;">
 
   <div>
-    <span class="messageHeader">
-      {{ messageSender }}
-    </span>
+  <h4>{{ message.subject }}</h4>
+  <p>{{ message.msgText }}</p>
 
-    <div class="messageText">
-      {{ message.msgText }}
-    </div>
-  </div>
+  <!-- sender is now populated from backend -->
+  <small>{{ message.sender?.name }}</small>
+</div>
 
 </a>
 

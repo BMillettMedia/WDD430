@@ -1,14 +1,12 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Message } from '../message.model';
-import { ContactService } from '../../contacts/contact.service';
-import { Contact } from '../../contacts/contact.model';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'cms-message-item',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './message-item.component.html',
   styleUrls: ['./message-item.component.css']
 })
@@ -17,15 +15,18 @@ export class MessageItemComponent implements OnInit {
   @Input() message!: Message;
   @Output() messageSelected = new EventEmitter<Message>();
 
-  messageSender!: string;
+  messageSender: string = 'Unknown';
 
-  constructor(private contactService: ContactService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    const contact: Contact | null =
-      this.contactService.getContact(this.message.sender);
 
-    this.messageSender = contact ? contact.name : 'Unknown';
+    // Backend sends full sender object (via populate)
+    if (this.message.sender && typeof this.message.sender === 'object') {
+      this.messageSender = this.message.sender.name;
+    } else {
+      this.messageSender = 'Unknown';
+    }
   }
 
   onSelected(): void {

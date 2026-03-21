@@ -1,5 +1,5 @@
+//import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 import { Message } from '../message.model';
@@ -7,14 +7,12 @@ import { MessageService } from '../message.service';
 
 @Component({
   selector: 'cms-message-detail',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './message-detail.component.html',
   styleUrls: ['./message-detail.component.css']
 })
 export class MessageDetailComponent implements OnInit {
 
-  message: Message | null = null;
+  message!: Message;
 
   constructor(
     private messageService: MessageService,
@@ -23,20 +21,13 @@ export class MessageDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.params.subscribe(params => {
+    const id = this.route.snapshot.params['id'];
 
-      const id: string = params['id'];
+    this.messageService.messageListChangedEvent
+      .subscribe(messages => {
+        this.message = messages.find(m => m.id === id)!;
+      });
 
-      const foundMessage = this.messageService.getMessage(id);
-
-      if (foundMessage) {
-        this.message = foundMessage;
-      } else {
-        this.message = null;
-      }
-
-    });
-
+    this.messageService.getMessages();
   }
-
 }

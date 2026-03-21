@@ -1,77 +1,69 @@
 const express = require('express');
 const router = express.Router();
-const Document = require('../modles/document');
+
+const Document = require('../models/documents');
+const SequenceGenerator = require('./sequenceGenerator');
+const documents = require('../models/documents');
+const sequenceGenerator = new SequenceGenerator();
 
 /* GET all documents */
-
 router.get('/', async (req, res) => {
-  try {
-    const documents = await Document.find();
-    res.status(200).json({
-      message: "Documents fetched successfully",
-      documents: documents
+  Document.find()
+    .then(document => {
+      res.status(200).json({
+        message: 'Documetns Fetched Successfully',
+        documents: documents
+      });
+    })
+    .catch(error => {
+    res.status(500).json({ 
+      message: 'error',
+      error: error
     });
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
+  })
 });
 
-/* POST create document */
+//add
+router.post('/', (req, res) => {
+  const nextId = sequenceGenerator.nextId('documents');
 
-router.post('/', async (req, res) => {
-  try {
-    const document = new Document({
-      name: req.body.name,
-      description: req.body.description,
-      url: req.body.url,
-      children: req.body.children
+  const document = new Document({
+    id: nextId,
+    name: req.body.name,
+    description: req.body.description,
+    url: req.body.url
+  });
+
+  document.save()
+    .then(created => {
+      res.status(201).json({
+        message: 'Added',
+        document: created
+      });
     });
-
-    const result = await document.save();
-
-    res.status(201).json({
-      message: "Document added successfully",
-      document: result
-    });
-
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
 });
 
-/* PUT update */
+// UPDATE
+router.put('/:id', (req, res) => {
+  Document.findOne({ id: req.params.id })
+    .then(doc => {
+      doc.name = req.body.name;
+      doc.description = req.body.description;
+      doc.url = req.body.url;
 
-router.put('/:id', async (req, res) => {
-  try {
-
-    await Document.updateOne(
-      { _id: req.params.id },
-      {
-        name: req.body.name,
-        description: req.body.description,
-        url: req.body.url
-      }
-    );
-
-    res.status(200).json({ message: "Document updated" });
-
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
+      return Document.updateOne({ id: req.params.id }, doc);
+    })
+    .then(() => {
+      res.status(204).json({ message: 'Updated' });
+    });
 });
 
-/* DELETE */
-
-router.delete('/:id', async (req, res) => {
-  try {
-
-    await Document.deleteOne({ _id: req.params.id });
-
-    res.status(200).json({ message: "Document deleted" });
-
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
+// DELETE
+router.delete('/:id', (req, res) => {
+  Document.deleteOne({ id: req.params.id })
+    .then(() => {
+      res.status(204).json({ message: 'Deleted' });
+    });
 });
 
 module.exports = router;

@@ -21,18 +21,15 @@ export class DocumentDetailComponent {
     private router: Router
   ) {}
 
+  // ✅ Navigate to detail view using routing
   onView(): void {
-
-    this.documentService.documentSelectedEvent.emit(this.document);
-
+    this.router.navigate(['/documents', this.document.id]);
   }
 
+  // ✅ Delete using backend service
   onDelete(): void {
-
     this.documentService.deleteDocument(this.document);
-
     this.router.navigate(['/documents']);
-
   }
 
 }

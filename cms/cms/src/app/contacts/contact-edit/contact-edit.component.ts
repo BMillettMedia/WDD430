@@ -1,30 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
-import { ContactItemComponent } from '../contact-item/contact-item.component';
-
 
 @Component({
   selector: 'cms-contact-edit',
   standalone: true,
-  imports: [CommonModule, FormsModule, ContactItemComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './contact-edit.component.html',
   styleUrls: ['./contact-edit.component.css']
 })
-export class ContactEditComponent implements OnInit {
+export class ContactEditComponent implements OnInit, OnDestroy {
 
-  originalContact!: Contact;   // not nullable anymore
+  originalContact!: Contact;
   contact!: Contact;
 
   editMode = false;
   id!: string;
 
-  groupContacts: Contact[] = []; 
-  
+  private subscription!: Subscription;
+
   constructor(
     private contactService: ContactService,
     private route: ActivatedRoute,
@@ -37,48 +36,39 @@ export class ContactEditComponent implements OnInit {
 
       this.id = params['id'];
 
-      // ADD MODE
       if (!this.id) {
         this.editMode = false;
-        this.contact = new Contact(
-          '',
-          '',
-          '',
-          '',
-          '',
-          null
-        );
+        this.contact = new Contact('', '', '', '', '', []);
         return;
       }
 
-      // EDIT MODE
-      const foundContact = this.contactService.getContact(this.id);
-
-      if (!foundContact) {
-        this.router.navigate(['/contacts']);
-        return;
-      }
-
-      this.originalContact = foundContact;
       this.editMode = true;
 
-      // Clone safely
-      this.contact = new Contact(
-        foundContact.id,
-        foundContact.name,
-        foundContact.email,
-        foundContact.phone,
-        foundContact.imageUrl,
-        foundContact.group
-      );
+      this.subscription =
+        this.contactService.contactListChangedEvent
+          .subscribe((contacts: Contact[]) => {
 
-      // ✅ FIX: initialize groupContacts safely
-      this.groupContacts = foundContact.group
-    ?   foundContact.group.slice()
-        : [];
+            const foundContact = contacts.find(c => c.id === this.id);
+
+            if (!foundContact) {
+              this.router.navigate(['/contacts']);
+              return;
+            }
+
+            this.originalContact = foundContact;
+
+            this.contact = new Contact(
+              foundContact.id,
+              foundContact.name,
+              foundContact.email,
+              foundContact.phone,
+              foundContact.imageUrl,
+              foundContact.group
+            );
+          });
+
+      this.contactService.getContacts();
     });
-
-
   }
 
   onSubmit(form: NgForm): void {
@@ -90,8 +80,8 @@ export class ContactEditComponent implements OnInit {
       value.name,
       value.email,
       value.phone,
-      value.imageUrl ?? '',
-      this.contact.group ?? null
+      value.imageUrl,
+      value.group
     );
 
     if (this.editMode) {
@@ -107,8 +97,7 @@ export class ContactEditComponent implements OnInit {
     this.router.navigate(['/contacts']);
   }
 
-  onRemoveItem(index: number): void {
-    this.groupContacts.splice(index,1);
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
-
 }

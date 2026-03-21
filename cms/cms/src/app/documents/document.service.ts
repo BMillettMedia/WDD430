@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -9,50 +9,23 @@ import { Document } from './documents.model';
 })
 export class DocumentService {
 
-  documentSelectedEvent = new EventEmitter<Document>();
   documentListChangedEvent = new Subject<Document[]>();
 
-  documents: Document[] = [];
-  maxDocumentId: number = 0;
+  private documents: Document[] = [];
 
-  // REPLACE WITH REAL FIREBASE URL
-  private firebaseUrl =
-    'https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com/documents.json';
+  private baseUrl = 'http://localhost:3000/documents';
 
   constructor(private http: HttpClient) {}
 
   // =========================
-  // GET ALL DOCUMENTS (HTTP)
+  // GET DOCUMENTS
   // =========================
- getDocuments() {
-
-  this.http.get<{message:string, documents:any}>(
-    'http://localhost:3000/documents'
-  )
-  .subscribe(response => {
-
-    this.documents = response.documents.map((doc:any) => {
-      return {
-        id: doc._id,
-        name: doc.name,
-        description: doc.description,
-        url: doc.url,
-        children: doc.children
-      };
-    });
-
-    this.documentListChangedEvent.next(this.documents.slice());
-
-  });
-
-}
-
-  // =========================
-  // GET SINGLE DOCUMENT
-  // =========================
-  getDocument(id: string): Document | null {
-
-    return this.documents.find(doc => doc.id === id) || null;
+  getDocuments(): void {
+    this.http.get<{ message: string, documents: Document[] }>(this.baseUrl)
+      .subscribe(response => {
+        this.documents = response.documents || [];
+        this.sortAndSend();
+      });
   }
 
   // =========================
@@ -62,10 +35,19 @@ export class DocumentService {
 
     if (!document) return;
 
-    document.id = (++this.maxDocumentId).toString();
+    document.id = '';
 
-    this.documents.push(document);
-    this.storeDocuments();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http.post<{ message: string, document: Document }>(
+      this.baseUrl,
+      document,
+      { headers }
+    )
+    .subscribe(response => {
+      this.documents.push(response.document);
+      this.sortAndSend();
+    });
   }
 
   // =========================
@@ -75,14 +57,18 @@ export class DocumentService {
 
     if (!original || !updated) return;
 
-    const index =
-      this.documents.findIndex(d => d.id === original.id);
+    const pos = this.documents.findIndex(d => d.id === original.id);
+    if (pos < 0) return;
 
-    if (index !== -1) {
-      updated.id = original.id;
-      this.documents[index] = updated;
-      this.storeDocuments();
-    }
+    updated.id = original.id;
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    this.http.put(this.baseUrl + '/' + original.id, updated, { headers })
+      .subscribe(() => {
+        this.documents[pos] = updated;
+        this.sortAndSend();
+      });
   }
 
   // =========================
@@ -90,36 +76,23 @@ export class DocumentService {
   // =========================
   deleteDocument(document: Document): void {
 
-    this.documents =
-      this.documents.filter(d => d.id !== document.id);
+    if (!document) return;
 
-    this.storeDocuments();
-  }
+    const pos = this.documents.findIndex(d => d.id === document.id);
+    if (pos < 0) return;
 
-  // =========================
-  // STORE DOCUMENTS (HTTP PUT)
-  // =========================
-  storeDocuments(): void {
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    this.http.put(this.firebaseUrl, this.documents, { headers })
+    this.http.delete(this.baseUrl + '/' + document.id)
       .subscribe(() => {
-        this.documentListChangedEvent
-          .next(this.documents.slice());
+        this.documents.splice(pos, 1);
+        this.sortAndSend();
       });
   }
 
   // =========================
-  // GET MAX ID
+  // HELPER
   // =========================
-  getMaxId(): number {
-
-    return this.documents.reduce(
-      (max, doc) => Math.max(max, +doc.id),
-      0
-    );
+  private sortAndSend() {
+    this.documents.sort((a, b) => a.name < b.name ? -1 : 1);
+    this.documentListChangedEvent.next(this.documents.slice());
   }
 }

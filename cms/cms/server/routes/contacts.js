@@ -1,47 +1,102 @@
-const express = require('express');
-const router = express.Router();
-const Contact = require('../models/contact');
+var express = require('express');
+var router = express.Router();
 
-router.get('/', async (req, res) => {
+const Contact = require('../models/contacts');
+const sequenceGenerator = require('./sequenceGenerator');
 
-  try {
-
-    const contacts = await Contact.find();
-
-    res.status(200).json({
-      message: "Contacts fetched successfully",
-      contacts: contacts
+// =========================
+// GET ALL CONTACTS
+// =========================
+router.get('/', (req, res, next) => {
+  Contact.find()
+    .populate('group')
+    .then(contacts => {
+      res.status(200).json({
+        message: 'Contacts fetched successfully',
+        contacts: contacts
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'An error occurred',
+        error: error
+      });
     });
-
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-
 });
 
-router.post('/', async (req, res) => {
+// =========================
+// ADD CONTACT
+// =========================
+router.post('/', (req, res, next) => {
+  const maxContactId = sequenceGenerator.nextId('contacts');
 
-  try {
+  const contact = new Contact({
+    id: maxContactId,
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    imageUrl: req.body.imageUrl,
+    group: req.body.group
+  });
 
-    const contact = new Contact({
-      name: req.body.name,
-      email: req.body.email,
-      phone: req.body.phone,
-      imageUrl: req.body.imageUrl,
-      group: req.body.group
+  contact.save()
+    .then(createdContact => {
+      res.status(201).json({
+        message: 'Contact added successfully',
+        contact: createdContact
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'An error occurred',
+        error: error
+      });
     });
+});
 
-    const result = await contact.save();
+// =========================
+// UPDATE CONTACT
+// =========================
+router.put('/:id', (req, res, next) => {
+  Contact.findOne({ id: req.params.id })
+    .then(contact => {
+      contact.name = req.body.name;
+      contact.email = req.body.email;
+      contact.phone = req.body.phone;
+      contact.imageUrl = req.body.imageUrl;
+      contact.group = req.body.group;
 
-    res.status(201).json({
-      message: "Contact added successfully",
-      contact: result
+      Contact.updateOne({ id: req.params.id }, contact)
+        .then(() => {
+          res.status(204).json({
+            message: 'Contact updated successfully'
+          });
+        });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'Contact not found',
+        error: error
+      });
     });
+});
 
-  } catch (err) {
-    res.status(500).json({ error: err });
-  }
-
+// =========================
+// DELETE CONTACT
+// =========================
+router.delete('/:id', (req, res, next) => {
+  Contact.deleteOne({ id: req.params.id })
+    .then(() => {
+      res.status(204).json({
+        message: 'Contact deleted successfully'
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'An error occurred',
+        error: error
+      });
+    });
 });
 
 module.exports = router;
