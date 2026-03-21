@@ -6,11 +6,12 @@ import { Subscription } from 'rxjs';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
+import { ContactItemComponent } from '../contact-item/contact-item.component';
 
 @Component({
   selector: 'cms-contact-edit',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ContactItemComponent],
   templateUrl: './contact-edit.component.html',
   styleUrls: ['./contact-edit.component.css']
 })
@@ -21,6 +22,8 @@ export class ContactEditComponent implements OnInit, OnDestroy {
 
   editMode = false;
   id!: string;
+
+  groupContacts: Contact[] = []; // ✅ FIXED (was missing)
 
   private subscription!: Subscription;
 
@@ -63,12 +66,20 @@ export class ContactEditComponent implements OnInit, OnDestroy {
               foundContact.email,
               foundContact.phone,
               foundContact.imageUrl,
-              foundContact.group
+              foundContact.group || []
             );
+
+            // ✅ populate groupContacts for UI
+            this.groupContacts = foundContact.group || [];
           });
 
       this.contactService.getContacts();
     });
+  }
+
+  // ✅ FIXED (was missing)
+  onRemoveItem(index: number): void {
+    this.groupContacts.splice(index, 1);
   }
 
   onSubmit(form: NgForm): void {
@@ -81,7 +92,7 @@ export class ContactEditComponent implements OnInit, OnDestroy {
       value.email,
       value.phone,
       value.imageUrl,
-      value.group
+      this.groupContacts // ✅ use updated group
     );
 
     if (this.editMode) {

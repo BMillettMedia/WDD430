@@ -4,7 +4,7 @@ const router = express.Router();
 const Document = require('../models/documents');
 const SequenceGenerator = require('./sequenceGenerator');
 const documents = require('../models/documents');
-const sequenceGenerator = new SequenceGenerator();
+/*const sequenceGenerator = new SequenceGenerator();
 
 /* GET all documents */
 router.get('/', async (req, res) => {

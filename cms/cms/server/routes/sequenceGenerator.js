@@ -1,62 +1,84 @@
 var Sequence = require('../models/sequence');
 
-var maxDocumentId;
+/*var maxDocumentId;
 var maxMessageId;
 var maxContactId;
-var sequenceId = null;
+var sequenceId = null;*/
 
-function SequenceGenerator() {
+class SequenceGenerator {
 
-  Sequence.findOne()
-    .exec(function(err, sequence) {
-      if (err) {
-        return res.status(500).json({
-          title: 'An error occurred',
-          error: err
-        });
-      }
+  constructor() {
 
-      sequenceId = sequence._id;
-      maxDocumentId = sequence.maxDocumentId;
-      maxMessageId = sequence.maxMessageId;
-      maxContactId = sequence.maxContactId;
-    });
-}
+    this.sequenceId = null;
 
-SequenceGenerator.prototype.nextId = function(collectionType) {
+    this.maxDocumentId = 0;
+    this.maxMessageId = 0;
+    this.maxContactId = 0;
 
-  var updateObject = {};
-  var nextId;
+    Sequence.findOne()
+      .then(sequence => {
 
-  switch (collectionType) {
-    case 'documents':
-      maxDocumentId++;
-      updateObject = {maxDocumentId: maxDocumentId};
-      nextId = maxDocumentId;
-      break;
-    case 'messages':
-      maxMessageId++;
-      updateObject = {maxMessageId: maxMessageId};
-      nextId = maxMessageId;
-      break;
-    case 'contacts':
-      maxContactId++;
-      updateObject = {maxContactId: maxContactId};
-      nextId = maxContactId;
-      break;
-    default:
-      return -1;
+        if (!sequence) {
+          const newSequence = new Sequence({
+            maxDocumentId: 0,
+            maxMessageId: 0,
+            maxContactId: 0
+          });
+
+          return newSequence.save();
+        }
+
+        return sequence;
+
+      })
+      .then(sequence => {
+
+        this.sequenceId = sequence._id;
+        this.maxDocumentId = sequence.maxDocumentId;
+        this.maxMessageId = sequence.maxMessageId;
+        this.maxContactId = sequence.maxContactId;
+
+      })
+      .catch(err => console.log(err));
   }
 
-  Sequence.update({_id: sequenceId}, {$set: updateObject},
-    function(err) {
-      if (err) {
-        console.log("nextId error = " + err);
-        return null
-      }
-    });
+  nextId(collectionType) {
 
-  return nextId;
+    let updateObject = {};
+    let nextId;
+
+    switch (collectionType) {
+
+      case 'documents':
+        this.maxDocumentId++;
+        updateObject = { maxDocumentId: this.maxDocumentId };
+        nextId = this.maxDocumentId;
+        break;
+
+      case 'messages':
+        this.maxMessageId++;
+        updateObject = { maxMessageId: this.maxMessageId };
+        nextId = this.maxMessageId;
+        break;
+
+      case 'contacts':
+        this.maxContactId++;
+        updateObject = { maxContactId: this.maxContactId };
+        nextId = this.maxContactId;
+        break;
+
+      default:
+        return null;
+    }
+
+    Sequence.updateOne(
+      { _id: this.sequenceId },
+      { $set: updateObject }
+    ).exec();
+
+    return nextId.toString();
+  }
+
 }
 
 module.exports = new SequenceGenerator();

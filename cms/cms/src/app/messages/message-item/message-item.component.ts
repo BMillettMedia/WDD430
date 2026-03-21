@@ -17,20 +17,14 @@ export class MessageItemComponent implements OnInit {
 
   messageSender: string = 'Unknown';
 
-  constructor() {}
-
   ngOnInit(): void {
 
-    // Backend sends full sender object (via populate)
     if (this.message.sender && typeof this.message.sender === 'object') {
       this.messageSender = this.message.sender.name;
-    } else {
-      this.messageSender = 'Unknown';
     }
   }
 
   onSelected(): void {
     this.messageSelected.emit(this.message);
   }
-
 }

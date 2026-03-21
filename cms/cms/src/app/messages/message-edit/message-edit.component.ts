@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { Message } from '../message.model';
 import { MessageService } from '../message.service';
+import { Contact } from '../../contacts/contact.model';
 
 @Component({
   selector: 'cms-message-edit',
@@ -13,20 +15,26 @@ import { MessageService } from '../message.service';
 })
 export class MessageEditComponent {
 
-  currentSender = '1';
+  // placeholder sender until UI selector is added
+  currentSender: Contact | null = null;
 
   constructor(private messageService: MessageService) {}
 
-  onSendMessage(subjectInput: HTMLInputElement, msgTextInput: HTMLTextAreaElement) {
+  onSendMessage(
+    subjectInput: HTMLInputElement,
+    msgTextInput: HTMLTextAreaElement
+  ) {
+
     const newMessage = new Message(
       Math.random().toString(),
-      this.currentSender,
       subjectInput.value,
-      msgTextInput.value
+      msgTextInput.value,
+      this.currentSender
     );
 
     this.messageService.addMessage(newMessage);
 
+    // clear form
     subjectInput.value = '';
     msgTextInput.value = '';
   }
